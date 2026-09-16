@@ -5,22 +5,7 @@
 
 @push('head')
 <style>
-/* ─── Scroll Reveal ─────────────────────────── */
-[data-reveal] {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-}
-[data-reveal].revealed {
-    opacity: 1;
-    transform: translateY(0);
-}
-[data-reveal][data-delay="100"] { transition-delay: 0.1s; }
-[data-reveal][data-delay="200"] { transition-delay: 0.2s; }
-[data-reveal][data-delay="300"] { transition-delay: 0.3s; }
-[data-reveal][data-delay="400"] { transition-delay: 0.4s; }
-[data-reveal][data-delay="500"] { transition-delay: 0.5s; }
-[data-reveal][data-delay="600"] { transition-delay: 0.6s; }
+/* GSAP ScrollTrigger handles [data-reveal] opacity/transform — no CSS needed */
 
 /* ─── Hero text glitch ──────────────────────── */
 @keyframes glitch-1 {
@@ -235,6 +220,11 @@
 </section>
 
 {{-- ═══════════════════════════════════════════ --}}
+{{-- TIRE TRACK DIVIDER: Hero → Stats            --}}
+{{-- ═══════════════════════════════════════════ --}}
+@include('components.tire-track-bar')
+
+{{-- ═══════════════════════════════════════════ --}}
 {{-- STATS BAR                                   --}}
 {{-- ═══════════════════════════════════════════ --}}
 <div class="relative z-10 bg-elite-charcoal border-y border-elite-gold/20 overflow-hidden">
@@ -242,15 +232,17 @@
     <div class="relative container-elite py-6">
         <div class="grid grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 divide-x-0 md:divide-x divide-elite-steel/40">
             @foreach([
-                ['200+',  'Custom Cars',         '🏎️'],
-                ['10K+',  'Expected Guests',      '👥'],
-                ['20+',   'Live Performances',    '🎤'],
-                ['1',     'Night. All Year.',     '⚡'],
-            ] as [$num, $label, $icon])
+                ['200', '200+',  'Custom Cars',         '🏎️'],
+                ['10000', '10K+',  'Expected Guests',   '👥'],
+                ['20', '20+',   'Live Performances',    '🎤'],
+                ['1', '1',     'Night. All Year.',      '⚡'],
+            ] as [$raw, $num, $label, $icon])
             <div class="flex items-center gap-4 px-4 md:px-8 py-4 md:py-2 group" data-reveal>
                 <span class="text-2xl">{{ $icon }}</span>
                 <div>
-                    <div class="font-bebas text-3xl md:text-4xl text-elite-gold">{{ $num }}</div>
+                    <div class="font-bebas text-3xl md:text-4xl text-elite-gold"
+                         data-count-to="{{ $raw }}"
+                         data-count-suffix="{{ str_contains($num, 'K') ? 'K+' : (str_contains($num, '+') ? '+' : '') }}">{{ $num }}</div>
                     <div class="font-mono text-[10px] tracking-ultra text-elite-smoke uppercase">{{ $label }}</div>
                 </div>
             </div>
@@ -258,6 +250,11 @@
         </div>
     </div>
 </div>
+
+{{-- ═══════════════════════════════════════════ --}}
+{{-- PAINT SPLASH DIVIDER: Stats → Event         --}}
+{{-- ═══════════════════════════════════════════ --}}
+@include('components.paint-splash-divider', ['label' => '◆ THE EVENT ◆'])
 
 {{-- ═══════════════════════════════════════════ --}}
 {{-- EVENT INFO SECTION                          --}}
@@ -348,9 +345,9 @@
     </div>
 </section>
 
-{{-- ═══════════════════════════════════════════ --}}
-{{-- TICKET TIERS                                --}}
-{{-- ═══════════════════════════════════════════ --}}
+@include('components.tire-track-bar')
+@include('components.paint-splash-divider', ['label' => '◆ TICKETS ◆'])
+
 <section id="tickets" class="section-py relative overflow-hidden">
     <div class="absolute inset-0 bg-carbon opacity-30"></div>
     <div class="glow-orb w-[500px] h-[500px] bg-elite-crimson top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></div>
@@ -454,9 +451,9 @@
     </div>
 </section>
 
-{{-- ═══════════════════════════════════════════ --}}
-{{-- LINE-UP TEASER                              --}}
-{{-- ═══════════════════════════════════════════ --}}
+@include('components.paint-splash-divider', ['label' => '◆ LINE-UP ◆'])
+@include('components.tire-track-bar')
+
 <section id="lineup" class="section-py relative overflow-hidden">
     <div class="glow-orb w-[800px] h-[400px] bg-elite-gold bottom-0 left-0 opacity-10"></div>
 
@@ -539,9 +536,9 @@
     </div>
 </section>
 
-{{-- ═══════════════════════════════════════════ --}}
-{{-- EXPERIENCES / WHY COME                      --}}
-{{-- ═══════════════════════════════════════════ --}}
+@include('components.tire-track-bar')
+@include('components.paint-splash-divider', ['label' => '◆ EXPERIENCES ◆'])
+
 <section id="experiences" class="section-py relative overflow-hidden bg-elite-coal">
     <div class="absolute inset-0 bg-carbon opacity-40"></div>
     <div class="glow-orb w-[600px] h-[600px] bg-elite-crimson top-1/2 right-0 -translate-y-1/2 opacity-15"></div>
@@ -583,9 +580,8 @@
     </div>
 </section>
 
-{{-- ═══════════════════════════════════════════ --}}
-{{-- VENDOR / SPONSOR CTA                        --}}
-{{-- ═══════════════════════════════════════════ --}}
+@include('components.paint-splash-divider', ['label' => '◆ VENDORS ◆'])
+
 <section id="vendors" class="section-py relative overflow-hidden">
     <div class="glow-orb w-[500px] h-[500px] bg-elite-gold top-0 right-0 opacity-10"></div>
 
@@ -631,9 +627,9 @@
     </div>
 </section>
 
-{{-- ═══════════════════════════════════════════ --}}
-{{-- TESTIMONIALS / SOCIAL PROOF                 --}}
-{{-- ═══════════════════════════════════════════ --}}
+@include('components.tire-track-bar')
+@include('components.paint-splash-divider', ['label' => '◆ REVIEWS ◆'])
+
 <section class="section-py relative overflow-hidden bg-elite-coal border-t border-elite-gold/10">
     <div class="glow-orb w-[700px] h-[300px] bg-elite-gold top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-5"></div>
 
@@ -661,9 +657,8 @@
     </div>
 </section>
 
-{{-- ═══════════════════════════════════════════ --}}
-{{-- CONTACT / MAP PLACEHOLDER                   --}}
-{{-- ═══════════════════════════════════════════ --}}
+@include('components.paint-splash-divider', ['label' => '◆ CONTACT ◆'])
+
 <section id="contact" class="section-py relative">
     <div class="container-elite">
         <div class="text-center mb-16">

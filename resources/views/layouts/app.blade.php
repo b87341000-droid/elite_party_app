@@ -33,20 +33,8 @@
 
     @stack('scripts')
 
-    {{-- Alpine.js & scroll reveal inline init --}}
+    {{-- GSAP handles [data-reveal] via ScrollTrigger in animations.js --}}
     <script>
-        // Intersection Observer for scroll reveals
-        const reveals = document.querySelectorAll('[data-reveal]');
-        const io = new IntersectionObserver((entries) => {
-            entries.forEach(e => {
-                if (e.isIntersecting) {
-                    e.target.classList.add('revealed');
-                    io.unobserve(e.target);
-                }
-            });
-        }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
-        reveals.forEach(el => io.observe(el));
-
         // Countdown timer
         function initCountdown(targetDate) {
             const update = () => {
