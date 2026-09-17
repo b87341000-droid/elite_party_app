@@ -66,9 +66,9 @@
                 {{-- Socials --}}
                 <div class="flex gap-3">
                     @foreach([
-                        ['label' => 'Instagram', 'href' => 'https://instagram.com', 'icon' => '<path d="M12 2.2c3.2 0 3.6 0 4.8.1 1.2.1 1.8.3 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.5.4 1 .4 2.2.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 1.2-.3 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.5.2-1 .4-2.2.4-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-1.2-.1-1.8-.3-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.5-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8c.1-1.2.3-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.5-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 3.2a6.6 6.6 0 100 13.2 6.6 6.6 0 000-13.2zm0 10.9a4.3 4.3 0 110-8.6 4.3 4.3 0 010 8.6zm6.8-11.2a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/>'],
-                        ['label' => 'TikTok', 'href' => 'https://tiktok.com', 'icon' => '<path d="M19.6 6.3a5.4 5.4 0 01-3.2-1.1 5.4 5.4 0 01-2.1-3.5h-3.1v12.4a2.9 2.9 0 01-2.9 2.8 2.9 2.9 0 01-2.9-2.8 2.9 2.9 0 012.9-2.8c.3 0 .6 0 .9.1V7.9a6 6 0 00-.9-.1 6 6 0 106 6V9.6a8.5 8.5 0 004.9 1.5V8a5.4 5.4 0 01-.6-.1z"/>'],
-                        ['label' => 'Twitter/X', 'href' => 'https://twitter.com', 'icon' => '<path d="M18.2 3h3.3l-7.1 8.2L22.7 21H16l-5.1-6.7L4.9 21H1.6l7.6-8.7L1 3h6.9l4.6 6.1L18.2 3zm-1.2 16.1h1.8L6.9 4.9H5L17 19.1z"/>'],
+                        ['label' => 'Instagram', 'href' => 'https://instagram.com/elite-tickets', 'icon' => '<path d="M12 2.2c3.2 0 3.6 0 4.8.1 1.2.1 1.8.3 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.5.4 1 .4 2.2.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 1.2-.3 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.5.2-1 .4-2.2.4-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-1.2-.1-1.8-.3-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.5-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8c.1-1.2.3-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.5-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 3.2a6.6 6.6 0 100 13.2 6.6 6.6 0 000-13.2zm0 10.9a4.3 4.3 0 110-8.6 4.3 4.3 0 010 8.6zm6.8-11.2a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/>'],
+                        ['label' => 'TikTok', 'href' => 'https://tiktok.com/@elite-tickets', 'icon' => '<path d="M19.6 6.3a5.4 5.4 0 01-3.2-1.1 5.4 5.4 0 01-2.1-3.5h-3.1v12.4a2.9 2.9 0 01-2.9 2.8 2.9 2.9 0 01-2.9-2.8 2.9 2.9 0 012.9-2.8c.3 0 .6 0 .9.1V7.9a6 6 0 00-.9-.1 6 6 0 106 6V9.6a8.5 8.5 0 004.9 1.5V8a5.4 5.4 0 01-.6-.1z"/>'],
+                        ['label' => 'Twitter/X', 'href' => 'https://twitter.com/eliteblockparty', 'icon' => '<path d="M18.2 3h3.3l-7.1 8.2L22.7 21H16l-5.1-6.7L4.9 21H1.6l7.6-8.7L1 3h6.9l4.6 6.1L18.2 3zm-1.2 16.1h1.8L6.9 4.9H5L17 19.1z"/>'],
                     ] as $social)
                     <a href="{{ $social['href'] }}" target="_blank" rel="noopener"
                        aria-label="{{ $social['label'] }}"
@@ -87,26 +87,50 @@
             {{-- Event --}}
             <div>
                 <h4 class="font-bebas text-lg tracking-ultra text-elite-gold mb-5 pb-2 border-b border-elite-gold/20">Event</h4>
-                <ul class="space-y-3">
-                    @foreach(['Event Details' => '#event', 'Line-Up' => '#lineup', 'Experiences' => '#experiences', 'Gallery' => '#gallery', 'Tickets' => '#tickets'] as $label => $href)
-                    <li><a href="{{ $href }}" class="text-sm text-elite-smoke hover:text-elite-gold transition-colors flex items-center gap-2 group">
+                <ul class="space-y-3 text-sm text-elite-smoke">
+                    <li><a href="{{ route('event') }}" class="hover:text-elite-gold transition-colors flex items-center gap-2 group">
                         <span class="w-1 h-1 bg-elite-gold rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                        {{ $label }}
+                        Event Details
                     </a></li>
-                    @endforeach
+                    <li><a href="{{ route('lineup') }}" class="hover:text-elite-gold transition-colors flex items-center gap-2 group">
+                        <span class="w-1 h-1 bg-elite-gold rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                        Line-Up
+                    </a></li>
+                    <li><a href="{{ route('experiences') }}" class="hover:text-elite-gold transition-colors flex items-center gap-2 group">
+                        <span class="w-1 h-1 bg-elite-gold rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                        Experiences
+                    </a></li>
+                    <li><a href="{{ route('gallery') }}" class="hover:text-elite-gold transition-colors flex items-center gap-2 group">
+                        <span class="w-1 h-1 bg-elite-gold rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                        Gallery
+                    </a></li>
+                    <li><a href="{{ route('home') }}#tickets" class="hover:text-elite-gold transition-colors flex items-center gap-2 group">
+                        <span class="w-1 h-1 bg-elite-gold rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                        Tickets
+                    </a></li>
                 </ul>
             </div>
 
             {{-- Get Involved --}}
             <div>
                 <h4 class="font-bebas text-lg tracking-ultra text-elite-gold mb-5 pb-2 border-b border-elite-gold/20">Participate</h4>
-                <ul class="space-y-3">
-                    @foreach(['Become A Vendor' => '#', 'Become A Sponsor' => '#', 'Perform At Elite' => '#', 'Volunteer' => '#', 'Media Partners' => '#'] as $label => $href)
-                    <li><a href="{{ $href }}" class="text-sm text-elite-smoke hover:text-elite-gold transition-colors flex items-center gap-2 group">
+                <ul class="space-y-3 text-sm text-elite-smoke">
+                    <li><a href="{{ route('vendors') }}" class="hover:text-elite-gold transition-colors flex items-center gap-2 group">
                         <span class="w-1 h-1 bg-elite-gold rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                        {{ $label }}
+                        Become A Vendor
                     </a></li>
-                    @endforeach
+                    <li><a href="{{ route('sponsors') }}" class="hover:text-elite-gold transition-colors flex items-center gap-2 group">
+                        <span class="w-1 h-1 bg-elite-gold rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                        Become A Sponsor
+                    </a></li>
+                    <li><a href="{{ route('about') }}" class="hover:text-elite-gold transition-colors flex items-center gap-2 group">
+                        <span class="w-1 h-1 bg-elite-gold rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                        About Us
+                    </a></li>
+                    <li><a href="{{ route('contact') }}" class="hover:text-elite-gold transition-colors flex items-center gap-2 group">
+                        <span class="w-1 h-1 bg-elite-gold rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                        Contact Form
+                    </a></li>
                 </ul>
             </div>
 
@@ -134,6 +158,11 @@
                                 <path d="M12 2a10 10 0 00-8.6 14.9L2 22l5.3-1.4A10 10 0 1012 2zm0 18.2a8.2 8.2 0 01-4.2-1.1l-.3-.2-3.1.8.8-3-.2-.3A8.2 8.2 0 1112 20.2z"/>
                             </svg>
                             WhatsApp Support
+                        </a>
+                    </li>
+                    <li class="pt-2">
+                        <a href="{{ route('contact') }}" class="hover:text-elite-gold transition-colors text-sm text-elite-gold font-mono">
+                            Contact Form →
                         </a>
                     </li>
                 </ul>

@@ -21,24 +21,16 @@
         </a>
 
         {{-- Desktop Nav --}}
-        <ul class="hidden lg:flex items-center gap-8" role="navigation">
-            @foreach([
-                'Home'        => route('home'),
-                'Event'       => '#event',
-                'Line-Up'     => '#lineup',
-                'Experiences' => '#experiences',
-                'Gallery'     => '#gallery',
-                'Vendors'     => '#vendors',
-                'Contact'     => '#contact',
-            ] as $label => $href)
-            <li>
-                <a href="{{ $href }}"
-                   class="relative font-bebas text-sm tracking-ultra uppercase text-elite-smoke hover:text-elite-gold transition-colors duration-300 group">
-                    {{ $label }}
-                    <span class="absolute -bottom-0.5 left-0 w-0 h-px bg-elite-gold group-hover:w-full transition-all duration-300"></span>
-                </a>
-            </li>
-            @endforeach
+        <ul class="hidden lg:flex items-center gap-7 font-bebas text-sm tracking-ultra uppercase" role="navigation">
+            <li><a href="{{ route('home') }}" class="text-elite-bone hover:text-elite-gold transition-colors">Home</a></li>
+            <li><a href="{{ route('about') }}" class="text-elite-bone hover:text-elite-gold transition-colors">About</a></li>
+            <li><a href="{{ route('event') }}" class="text-elite-bone hover:text-elite-gold transition-colors">Event</a></li>
+            <li><a href="{{ route('lineup') }}" class="text-elite-bone hover:text-elite-gold transition-colors">Line-Up</a></li>
+            <li><a href="{{ route('experiences') }}" class="text-elite-bone hover:text-elite-gold transition-colors">Experiences</a></li>
+            <li><a href="{{ route('gallery') }}" class="text-elite-bone hover:text-elite-gold transition-colors">Gallery</a></li>
+            <li><a href="{{ route('vendors') }}" class="text-elite-bone hover:text-elite-gold transition-colors">Vendors</a></li>
+            <li><a href="{{ route('sponsors') }}" class="text-elite-bone hover:text-elite-gold transition-colors">Sponsors</a></li>
+            <li><a href="{{ route('contact') }}" class="text-elite-bone hover:text-elite-gold transition-colors">Contact</a></li>
         </ul>
 
         {{-- Desktop CTA --}}
@@ -54,7 +46,7 @@
                 Login
             </a>
             @endauth
-            <a href="#tickets" class="btn-gold !px-5 !py-2.5 !text-xs !shadow-none hover:!shadow-gold-glow">
+            <a href="{{ route('home') }}#tickets" class="btn-gold !px-5 !py-2.5 !text-xs !shadow-none hover:!shadow-gold-glow">
                 <span>🎟️</span>
                 <span>Buy Tickets</span>
             </a>
@@ -78,31 +70,33 @@
         <div class="container-elite py-8 h-full overflow-y-auto">
             {{-- Nav links --}}
             <nav class="space-y-1 mb-8">
-                @foreach([
-                    'Home'        => route('home'),
-                    'Event'       => '#event',
-                    'Line-Up'     => '#lineup',
-                    'Experiences' => '#experiences',
-                    'Gallery'     => '#gallery',
-                    'Vendors'     => '#vendors',
-                    'Contact'     => '#contact',
-                ] as $label => $href)
-                <a href="{{ $href }}"
-                   onclick="document.getElementById('mobile-menu').classList.add('translate-x-full')"
-                   class="flex items-center justify-between py-4 border-b border-elite-steel/30
-                          font-display text-4xl text-elite-bone hover:text-elite-gold
-                          transition-colors duration-300 racing-stripe pl-4">
-                    {{ $label }}
-                    <svg class="w-5 h-5 text-elite-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
-                    </svg>
-                </a>
+                @foreach ([
+                    'Home'         => route('home'),
+                    'About'        => route('about'),
+                    'Event'        => route('event'),
+                    'Line-Up'      => route('lineup'),
+                    'Experiences'  => route('experiences'),
+                    'Gallery'      => route('gallery'),
+                    'Vendors'      => route('vendors'),
+                    'Sponsors'     => route('sponsors'),
+                    'Contact'      => route('contact'),
+                ] as $label => $url)
+                    <a href="{{ $url }}"
+                       onclick="document.getElementById('mobile-menu').classList.add('translate-x-full'); document.body.style.overflow=''"
+                       class="flex items-center justify-between py-4 border-b border-elite-steel/30
+                              font-display text-3xl text-elite-bone hover:text-elite-gold
+                              transition-colors duration-300 racing-stripe pl-4">
+                        {{ $label }}
+                        <svg class="w-5 h-5 text-elite-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
+                        </svg>
+                    </a>
                 @endforeach
             </nav>
 
             {{-- Mobile CTAs --}}
             <div class="space-y-3 mb-8">
-                <a href="#tickets" class="btn-gold w-full justify-center !py-5 text-base">
+                <a href="{{ route('home') }}#tickets" class="btn-gold w-full justify-center !py-5 text-base">
                     🎟️ BUY TICKETS NOW
                 </a>
                 @guest
