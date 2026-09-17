@@ -10,85 +10,95 @@ class TicketTypeSeeder extends Seeder
 {
     public function run(): void
     {
-        TicketType::truncate();
+        $event = Event::firstOrCreate(
+            ['slug' => 'elite-block-party-2025'],
+            [
+                'name' => 'Elite Block Party 2025',
+                'tagline' => 'The Ultimate Car & Music Festival',
+                'description' => 'Where 200+ custom cars, Nigeria\'s hottest artists, and Lagos nightlife collide for one unforgettable night.',
+                'venue_name' => 'Eko Hotel Grounds',
+                'venue_address' => 'Plot 1415 Adetokunbo Ademola Street',
+                'city' => 'Lagos',
+                'state' => 'Lagos',
+                'country' => 'Nigeria',
+                'starts_at' => '2025-12-20 20:00:00',
+                'ends_at' => '2025-12-21 04:00:00',
+                'doors_open_at' => '2025-12-20 18:00:00',
+                'is_active' => true,
+                'tickets_on_sale' => true,
+            ]
+        );
 
-        $event = Event::where('slug', 'elite-block-party-2025')->firstOrFail();
-
-        $tiers = [
+        $types = [
             [
                 'name' => 'Regular',
-                'slug' => 'regular',
-                'description' => 'General admission to the car showcase, live performances, and street food court. The vibe starts here.',
+                'description' => 'General admission to the main event.',
+                'perks' => ['General admission', 'Access to main stage', 'Access to food village'],
                 'online_price' => 12000,
-                'door_price' => 15000,
-                'quantity_total' => 5000,
-                'quantity_sold' => 850,
+                'door_price' => 17000,
+                'quantity_total' => 2000,
                 'max_per_order' => 10,
                 'sort_order' => 1,
-                'perks' => ['General Area Access', 'Live Performances', 'Car Showcase', 'Street Food Court'],
-                'is_active' => true,
-                'is_vendor_stall' => false,
             ],
             [
                 'name' => 'VIP',
-                'slug' => 'vip',
-                'description' => 'Premium access with reserved viewing area, VIP lounge, and one complimentary drink. Stand out.',
+                'description' => 'Elevated experience with priority access.',
+                'perks' => ['Everything in Regular', 'VIP lounge access', 'Priority entry lane', 'Dedicated bar'],
                 'online_price' => 25000,
                 'door_price' => 30000,
-                'quantity_total' => 2000,
-                'quantity_sold' => 620,
+                'quantity_total' => 500,
                 'max_per_order' => 6,
                 'sort_order' => 2,
-                'perks' => ['VIP Lounge Access', 'Reserved Viewing Area', 'Complimentary Drink', 'Priority Entry', 'Car Showcase Access'],
-                'is_active' => true,
-                'is_vendor_stall' => false,
             ],
             [
                 'name' => 'VVIP',
-                'slug' => 'vvip',
-                'description' => 'Exclusive lounge, 3-hour open bar, meet & greet access, dedicated concierge, VIP parking, and giftbag.',
+                'description' => 'The ultimate ELITE experience.',
+                'perks' => [
+                    'Everything in VIP',
+                    'Front-row views',
+                    'Private restrooms',
+                    'Complimentary welcome drinks',
+                    'Afterparty access till sunrise',
+                    'Priority valet parking',
+                ],
                 'online_price' => 40000,
-                'door_price' => 50000,
-                'quantity_total' => 500,
-                'quantity_sold' => 210,
+                'door_price' => 45000,
+                'quantity_total' => 200,
                 'max_per_order' => 4,
                 'sort_order' => 3,
-                'perks' => ['Exclusive VVIP Lounge', 'Open Bar (3hrs)', 'Meet & Greet Access', 'Dedicated Concierge', 'VIP Parking', 'Premium Giftbag'],
-                'is_active' => true,
-                'is_vendor_stall' => false,
             ],
             [
                 'name' => 'Table of 4',
-                'slug' => 'table-of-4',
-                'description' => 'Private table for 4, full-night open bar, premium food platter, dedicated waiter, VIP parking x2, and exclusive giftbags.',
+                'description' => 'Private table for four with bottle service.',
+                'perks' => ['4 VVIP passes', 'Private table', 'Bottle service', 'Dedicated waiter'],
                 'online_price' => 220000,
-                'door_price' => 250000,
-                'quantity_total' => 100,
-                'quantity_sold' => 45,
-                'max_per_order' => 1,
+                'door_price' => null,
+                'quantity_total' => 30,
+                'max_per_order' => 2,
                 'sort_order' => 4,
-                'perks' => ['Private Table for 4', 'Open Bar (Full Night)', 'Premium Food Platter', 'Dedicated Waiter', 'VIP Parking x2', 'Exclusive Giftbags x4', 'Priority Access All Areas'],
-                'is_active' => true,
-                'is_vendor_stall' => false,
             ],
             [
                 'name' => 'Vendor Stall',
-                'slug' => 'vendor-stall',
-                'description' => 'Premium vendor stall space with electricity, branding opportunities, and access to 10,000+ paying guests.',
-                'online_price' => 150000,
+                'description' => 'Secure your vendor stall at the event.',
+                'perks' => ['Vendor stall space', 'Power supply', 'Vendor pass for 2'],
+                'online_price' => 60000,
                 'door_price' => null,
-                'quantity_total' => 80,
-                'quantity_sold' => 32,
+                'quantity_total' => 50,
                 'max_per_order' => 1,
-                'sort_order' => 5,
-                'perks' => ['3x3m Stall Space', 'Electricity Supply', '2 Vendor Passes', 'Setup from 10AM', 'Logo on Vendor Map'],
-                'is_active' => true,
                 'is_vendor_stall' => true,
+                'sort_order' => 5,
             ],
         ];
 
-        foreach ($tiers as $tier) {
-            $event->ticketTypes()->create($tier);
+        foreach ($types as $type) {
+            TicketType::updateOrCreate(
+                ['slug' => str($type['name'])->slug()->toString()],
+                array_merge($type, [
+                    'event_id' => $event->id,
+                    'is_active' => true,
+                    'is_vendor_stall' => $type['is_vendor_stall'] ?? false,
+                ])
+            );
         }
     }
 }

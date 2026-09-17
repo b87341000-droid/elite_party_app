@@ -34,7 +34,7 @@
                         @foreach ($headliners as $artist)
                             <div class="group relative aspect-[3/4] bg-elite-charcoal border border-elite-steel overflow-hidden card-elite">
                                 @if ($artist->photo)
-                                    <img src="{{ asset('storage/' . $artist->photo) }}"
+                                    <img src="{{ str_starts_with($artist->photo, 'http') || str_starts_with($artist->photo, 'images/') ? asset($artist->photo) : asset('storage/' . $artist->photo) }}"
                                          alt="{{ $artist->display_name }}"
                                          class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                                 @else
@@ -75,7 +75,7 @@
                         @foreach ($performers as $artist)
                             <div class="group relative aspect-square bg-elite-charcoal border border-elite-steel overflow-hidden card-elite">
                                 @if ($artist->photo)
-                                    <img src="{{ asset('storage/' . $artist->photo) }}"
+                                    <img src="{{ str_starts_with($artist->photo, 'http') || str_starts_with($artist->photo, 'images/') ? asset($artist->photo) : asset('storage/' . $artist->photo) }}"
                                          alt="{{ $artist->display_name }}"
                                          class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                                 @else

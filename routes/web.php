@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ExperienceController;
@@ -9,6 +11,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LineupController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SponsorController;
+use App\Http\Controllers\TicketController;
 use App\Http\Controllers\VendorController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +26,22 @@ Route::get('/vendors', [VendorController::class, 'index'])->name('vendors');
 Route::get('/sponsors', [SponsorController::class, 'index'])->name('sponsors');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
+
+// Tickets
+Route::get('/tickets', [TicketController::class, 'index'])->name('tickets.index');
+
+// Cart
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::post('/cart/add/{ticketType}', [CartController::class, 'add'])->name('cart.add');
+Route::patch('/cart/update/{ticketType}', [CartController::class, 'update'])->name('cart.update');
+Route::delete('/cart/remove/{ticketType}', [CartController::class, 'remove'])->name('cart.remove');
+Route::post('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
+
+// Checkout
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+Route::get('/checkout/success/{reference}', [CheckoutController::class, 'success'])->name('checkout.success');
+Route::get('/checkout/failed', [CheckoutController::class, 'failed'])->name('checkout.failed');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

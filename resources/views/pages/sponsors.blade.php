@@ -38,7 +38,7 @@
                                    target="_blank" rel="noopener"
                                    class="card-elite p-8 aspect-square flex flex-col items-center justify-center text-center group">
                                     @if ($sponsor->logo)
-                                        <img src="{{ asset('storage/' . $sponsor->logo) }}"
+                                        <img src="{{ str_starts_with($sponsor->logo, 'http') || str_starts_with($sponsor->logo, 'images/') ? asset($sponsor->logo) : asset('storage/' . $sponsor->logo) }}"
                                              alt="{{ $sponsor->name }}"
                                              class="max-w-full max-h-20 mb-4 grayscale group-hover:grayscale-0 transition-all duration-500">
                                     @endif

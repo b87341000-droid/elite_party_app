@@ -21,7 +21,7 @@
         </a>
 
         {{-- Desktop Nav --}}
-        <ul class="hidden lg:flex items-center gap-7 font-bebas text-sm tracking-ultra uppercase" role="navigation">
+        <ul class="hidden lg:flex items-center gap-6 font-bebas text-sm tracking-ultra uppercase" role="navigation">
             <li><a href="{{ route('home') }}" class="text-elite-bone hover:text-elite-gold transition-colors">Home</a></li>
             <li><a href="{{ route('about') }}" class="text-elite-bone hover:text-elite-gold transition-colors">About</a></li>
             <li><a href="{{ route('event') }}" class="text-elite-bone hover:text-elite-gold transition-colors">Event</a></li>
@@ -33,8 +33,21 @@
             <li><a href="{{ route('contact') }}" class="text-elite-bone hover:text-elite-gold transition-colors">Contact</a></li>
         </ul>
 
-        {{-- Desktop CTA --}}
-        <div class="hidden lg:flex items-center gap-4">
+        {{-- Desktop CTA & Cart --}}
+        <div class="hidden lg:flex items-center gap-3">
+            {{-- Cart icon --}}
+            @php $cartCount = app(\App\Services\CartService::class)->count(); @endphp
+            <a href="{{ route('cart.index') }}" class="relative p-2 text-elite-bone hover:text-elite-gold transition-colors" aria-label="Cart">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+                </svg>
+                @if ($cartCount > 0)
+                    <span class="absolute -top-1 -right-1 w-5 h-5 bg-elite-crimson text-white font-mono text-[10px] flex items-center justify-center rounded-full font-bold">
+                        {{ $cartCount }}
+                    </span>
+                @endif
+            </a>
+
             @auth
             <a href="{{ url('/dashboard') }}"
                class="font-bebas text-xs tracking-ultra uppercase text-elite-smoke hover:text-elite-gold transition-colors">
@@ -43,23 +56,44 @@
             @else
             <a href="{{ route('login') }}"
                class="font-bebas text-xs tracking-ultra uppercase text-elite-smoke hover:text-elite-gold transition-colors">
-                Login
+                Log in
+            </a>
+            <a href="{{ route('register') }}"
+               class="hidden sm:inline-block font-bebas text-xs tracking-ultra uppercase text-elite-smoke hover:text-elite-gold transition-colors">
+                Register
             </a>
             @endauth
-            <a href="{{ route('home') }}#tickets" class="btn-gold !px-5 !py-2.5 !text-xs !shadow-none hover:!shadow-gold-glow">
-                <span>🎟️</span>
-                <span>Buy Tickets</span>
+
+            <a href="{{ route('tickets.index') }}" class="btn-gold !px-5 !py-2.5 !text-xs !shadow-none hover:!shadow-gold-glow">
+                <span class="relative z-10 flex items-center gap-1.5">
+                    <span>🎟️</span>
+                    <span>Buy Tickets</span>
+                </span>
             </a>
         </div>
 
         {{-- Mobile hamburger --}}
-        <button id="menu-toggle"
-                class="lg:hidden relative w-10 h-10 flex flex-col items-center justify-center gap-[5px] group"
-                aria-label="Toggle mobile menu" aria-expanded="false">
-            <span class="w-7 h-0.5 bg-elite-bone group-[.open]:rotate-45 group-[.open]:translate-y-[7px] transition-all duration-300 origin-center"></span>
-            <span class="w-7 h-0.5 bg-elite-bone group-[.open]:opacity-0 transition-all duration-300"></span>
-            <span class="w-7 h-0.5 bg-elite-bone group-[.open]:-rotate-45 group-[.open]:-translate-y-[7px] transition-all duration-300 origin-center"></span>
-        </button>
+        <div class="lg:hidden flex items-center gap-3">
+            @php $cartCountMobile = app(\App\Services\CartService::class)->count(); @endphp
+            <a href="{{ route('cart.index') }}" class="relative p-2 text-elite-bone hover:text-elite-gold transition-colors" aria-label="Cart">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+                </svg>
+                @if ($cartCountMobile > 0)
+                    <span class="absolute -top-1 -right-1 w-4 h-4 bg-elite-crimson text-white font-mono text-[9px] flex items-center justify-center rounded-full font-bold">
+                        {{ $cartCountMobile }}
+                    </span>
+                @endif
+            </a>
+
+            <button id="menu-toggle"
+                    class="relative w-10 h-10 flex flex-col items-center justify-center gap-[5px] group"
+                    aria-label="Toggle mobile menu" aria-expanded="false">
+                <span class="w-7 h-0.5 bg-elite-bone group-[.open]:rotate-45 group-[.open]:translate-y-[7px] transition-all duration-300 origin-center"></span>
+                <span class="w-7 h-0.5 bg-elite-bone group-[.open]:opacity-0 transition-all duration-300"></span>
+                <span class="w-7 h-0.5 bg-elite-bone group-[.open]:-rotate-45 group-[.open]:-translate-y-[7px] transition-all duration-300 origin-center"></span>
+            </button>
+        </div>
     </nav>
 
     {{-- Mobile Menu --}}
@@ -72,6 +106,8 @@
             <nav class="space-y-1 mb-8">
                 @foreach ([
                     'Home'         => route('home'),
+                    'Tickets'      => route('tickets.index'),
+                    'Cart'         => route('cart.index'),
                     'About'        => route('about'),
                     'Event'        => route('event'),
                     'Line-Up'      => route('lineup'),
@@ -96,7 +132,7 @@
 
             {{-- Mobile CTAs --}}
             <div class="space-y-3 mb-8">
-                <a href="{{ route('home') }}#tickets" class="btn-gold w-full justify-center !py-5 text-base">
+                <a href="{{ route('tickets.index') }}" class="btn-gold w-full justify-center !py-5 text-base">
                     🎟️ BUY TICKETS NOW
                 </a>
                 @guest
@@ -144,12 +180,14 @@
     }, { passive: true });
 
     // Mobile menu toggle
-    toggle.addEventListener('click', () => {
-        menuOpen = !menuOpen;
-        toggle.classList.toggle('open', menuOpen);
-        menu.classList.toggle('translate-x-full', !menuOpen);
-        toggle.setAttribute('aria-expanded', menuOpen);
-        document.body.style.overflow = menuOpen ? 'hidden' : '';
-    });
+    if (toggle) {
+        toggle.addEventListener('click', () => {
+            menuOpen = !menuOpen;
+            toggle.classList.toggle('open', menuOpen);
+            menu.classList.toggle('translate-x-full', !menuOpen);
+            toggle.setAttribute('aria-expanded', menuOpen);
+            document.body.style.overflow = menuOpen ? 'hidden' : '';
+        });
+    }
 })();
 </script>

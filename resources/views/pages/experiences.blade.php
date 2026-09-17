@@ -37,13 +37,21 @@
         @else
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @foreach ($experiences as $i => $exp)
-                    <div class="card-elite p-8 relative group">
-                        <div class="absolute top-4 right-4 font-mono text-[10px] text-elite-gold/40">
+                    <div class="card-elite p-8 relative group overflow-hidden">
+                        <div class="absolute top-4 right-4 z-10 font-mono text-[10px] text-elite-gold/70 bg-elite-black/60 px-2 py-0.5 rounded">
                             {{ str_pad($i + 1, 2, '0', STR_PAD_LEFT) }}
                         </div>
-                        <div class="text-5xl mb-6 group-hover:scale-110 transition-transform duration-500">
-                            {{ $exp->icon ?? '✨' }}
-                        </div>
+                        @if ($exp->image)
+                            <div class="relative h-44 -mx-8 -mt-8 mb-6 overflow-hidden">
+                                <img src="{{ asset(ltrim($exp->image, '/')) }}" alt="{{ $exp->title }}"
+                                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                <div class="absolute inset-0 bg-gradient-to-t from-elite-charcoal via-transparent to-transparent"></div>
+                            </div>
+                        @else
+                            <div class="text-5xl mb-6 group-hover:scale-110 transition-transform duration-500">
+                                {{ $exp->icon ?? '✨' }}
+                            </div>
+                        @endif
                         <h3 class="heading-display text-2xl text-elite-bone mb-3">{{ $exp->title }}</h3>
                         <p class="text-sm text-elite-smoke leading-relaxed">{{ $exp->description }}</p>
                     </div>

@@ -53,7 +53,7 @@
                 @foreach ($items as $item)
                     <div class="group relative bg-elite-charcoal border border-elite-steel overflow-hidden card-elite">
                         @if ($item->type === 'image' && $item->file_path)
-                            <img src="{{ asset('storage/' . $item->file_path) }}"
+                            <img src="{{ str_starts_with($item->file_path, 'http') || str_starts_with($item->file_path, 'images/') ? asset($item->file_path) : asset('storage/' . $item->file_path) }}"
                                  alt="{{ $item->title }}"
                                  class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                         @else

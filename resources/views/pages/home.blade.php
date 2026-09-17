@@ -432,9 +432,9 @@
 
                     {{-- CTA --}}
                     @if($tier['hot'])
-                    <a href="#" class="btn-gold w-full justify-center">Buy Now</a>
+                    <a href="{{ route('tickets.index') }}" class="btn-gold w-full justify-center">Buy Now</a>
                     @else
-                    <a href="#" class="btn-outline-gold w-full justify-center">Select Tier</a>
+                    <a href="{{ route('tickets.index') }}" class="btn-outline-gold w-full justify-center">Select Tier</a>
                     @endif
                 </div>
             </div>
