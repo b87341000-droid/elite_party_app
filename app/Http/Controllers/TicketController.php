@@ -19,4 +19,36 @@ class TicketController extends Controller
 
         return view('tickets.index', compact('event', 'types'));
     }
+
+    public function myTickets()
+    {
+        $tickets = \App\Models\Ticket::with(['ticketType.event', 'order'])
+            ->where('user_id', auth()->id())
+            ->orWhere('attendee_email', auth()->user()->email)
+            ->latest()
+            ->get();
+
+        return view('tickets.my-tickets', compact('tickets'));
+    }
+
+    public function downloadPdf(string $uuid)
+    {
+        $ticket = \App\Models\Ticket::where('uuid', $uuid)->firstOrFail();
+
+        // Only owner or admin can download
+        $isOwner = auth()->check() && (
+            $ticket->user_id === auth()->id() ||
+            $ticket->attendee_email === auth()->user()->email
+        );
+        $isAdmin = auth()->check() && auth()->user()->isAdmin();
+
+        abort_unless($isOwner || $isAdmin, 403);
+
+        abort_unless($ticket->pdf_path && \Storage::disk('local')->exists($ticket->pdf_path), 404);
+
+        return response()->download(
+            storage_path('app/' . $ticket->pdf_path),
+            "ELITE-Ticket-{$ticket->ticket_code}.pdf"
+        );
+    }
 }

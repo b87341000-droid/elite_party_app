@@ -30,6 +30,16 @@ Route::post('/contact', [ContactController::class, 'submit'])->name('contact.sub
 // Tickets
 Route::get('/tickets', [TicketController::class, 'index'])->name('tickets.index');
 
+// My tickets
+Route::middleware('auth')->group(function () {
+    Route::get('/my-tickets', [TicketController::class, 'myTickets'])->name('tickets.mine');
+});
+
+// PDF download (auth checked in controller)
+Route::get('/tickets/{uuid}/pdf', [TicketController::class, 'downloadPdf'])
+    ->middleware('auth')
+    ->name('tickets.pdf');
+
 // Cart
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart/add/{ticketType}', [CartController::class, 'add'])->name('cart.add');

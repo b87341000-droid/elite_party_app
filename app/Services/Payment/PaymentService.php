@@ -84,6 +84,9 @@ class PaymentService
 
             $this->ticketService->generateForOrder($order);
         });
+
+        // Queue email outside the transaction
+        \App\Jobs\SendTicketEmail::dispatch($order);
     }
 
     private function gatewayName(): string
