@@ -26,9 +26,10 @@
         <nav class="flex-1 p-4 space-y-1 overflow-y-auto">
             @php
                 $navItems = [
-                    ['admin.dashboard',    '📊', 'Dashboard'],
-                    ['admin.scanner',      '📷', 'Scanner'],
-                    ['admin.scan-logs.index', '📋', 'Scan Logs'],
+                    ['admin.dashboard',         '📊', 'Dashboard'],
+                    ['admin.applications.index','📥', 'Applications'],
+                    ['admin.scanner',           '📷', 'Scanner'],
+                    ['admin.scan-logs.index',   '📋', 'Scan Logs'],
                 ];
             @endphp
 

@@ -12,7 +12,11 @@ use App\Http\Controllers\LineupController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SponsorController;
 use App\Http\Controllers\TicketController;
-use App\Http\Controllers\VendorController;
+use App\Http\Controllers\MediaPartnerController;
+use App\Http\Controllers\PerformerController;
+use App\Http\Controllers\SponsorApplicationController;
+use App\Http\Controllers\VendorApplicationController;
+use App\Http\Controllers\VolunteerController;
 use Illuminate\Support\Facades\Route;
 
 // Public pages
@@ -39,6 +43,25 @@ Route::middleware('auth')->group(function () {
 Route::get('/tickets/{uuid}/pdf', [TicketController::class, 'downloadPdf'])
     ->middleware('auth')
     ->name('tickets.pdf');
+
+// Applications
+Route::get('/vendor/apply', [VendorApplicationController::class, 'create'])->name('vendor.apply');
+Route::post('/vendor/apply', [VendorApplicationController::class, 'store'])->name('vendor.apply.store');
+
+Route::get('/sponsor/apply', [SponsorApplicationController::class, 'create'])->name('sponsor.apply');
+Route::post('/sponsor/apply', [SponsorApplicationController::class, 'store'])->name('sponsor.apply.store');
+
+Route::get('/volunteer', [VolunteerController::class, 'create'])->name('volunteer.apply');
+Route::post('/volunteer', [VolunteerController::class, 'store'])->name('volunteer.apply.store');
+
+Route::get('/perform', [PerformerController::class, 'create'])->name('performer.apply');
+Route::post('/perform', [PerformerController::class, 'store'])->name('performer.apply.store');
+
+Route::get('/media-partners', [MediaPartnerController::class, 'create'])->name('media.apply');
+Route::post('/media-partners', [MediaPartnerController::class, 'store'])->name('media.apply.store');
+
+// Shared success page
+Route::view('/apply/success', 'applications.success')->name('apply.success');
 
 // Cart
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
