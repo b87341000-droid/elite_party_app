@@ -33,8 +33,8 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         @foreach ($headliners as $artist)
                             <div class="group relative aspect-[3/4] bg-elite-charcoal border border-elite-steel overflow-hidden card-elite">
-                                @if ($artist->photo)
-                                    <img src="{{ str_starts_with($artist->photo, 'http') || str_starts_with($artist->photo, 'images/') ? asset($artist->photo) : asset('storage/' . $artist->photo) }}"
+                                @if ($artist->photo_url)
+                                    <img src="{{ $artist->photo_url }}"
                                          alt="{{ $artist->display_name }}"
                                          class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                                 @else
@@ -74,8 +74,8 @@
                     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                         @foreach ($performers as $artist)
                             <div class="group relative aspect-square bg-elite-charcoal border border-elite-steel overflow-hidden card-elite">
-                                @if ($artist->photo)
-                                    <img src="{{ str_starts_with($artist->photo, 'http') || str_starts_with($artist->photo, 'images/') ? asset($artist->photo) : asset('storage/' . $artist->photo) }}"
+                                @if ($artist->photo_url)
+                                    <img src="{{ $artist->photo_url }}"
                                          alt="{{ $artist->display_name }}"
                                          class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                                 @else

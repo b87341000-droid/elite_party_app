@@ -36,6 +36,12 @@ class Artist extends Model
         return $query->where('is_active', true);
     }
 
+    public function getPhotoUrlAttribute(): ?string
+    {
+        if (! $this->photo) return null;
+        return asset('storage/' . $this->photo);
+    }
+
     public function scopeOrdered($query)
     {
         return $query->orderByDesc('is_headliner')->orderBy('sort_order');

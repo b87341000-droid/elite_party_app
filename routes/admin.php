@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\ApplicationsController;
+use App\Http\Controllers\Admin\ArtistController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ScanLogsController;
 use App\Http\Controllers\Admin\ScannerController;
@@ -17,6 +18,9 @@ Route::middleware(['auth', 'admin'])
         Route::get('/applications/{application}', [ApplicationsController::class, 'show'])->name('applications.show');
         Route::post('/applications/{application}/approve', [ApplicationsController::class, 'approve'])->name('applications.approve');
         Route::post('/applications/{application}/reject', [ApplicationsController::class, 'reject'])->name('applications.reject');
+
+        // Artists
+        Route::resource('artists', ArtistController::class)->except(['show']);
 
         // Scanner
         Route::get('/scanner', [ScannerController::class, 'index'])->name('scanner');
