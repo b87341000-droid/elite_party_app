@@ -63,6 +63,12 @@
                transition-all duration-300 hover:bg-elite-gold hover:text-elite-black clip-corner;
     }
 
+    .btn-outline-crimson {
+        @apply relative inline-flex items-center justify-center gap-2 border-2 border-elite-crimson
+               text-elite-crimson font-display uppercase tracking-wider px-8 py-4 text-sm
+               transition-all duration-300 hover:bg-elite-crimson hover:text-white clip-corner;
+    }
+
     .btn-crimson {
         @apply inline-flex items-center justify-center gap-2 bg-crimson-gradient
                text-white font-display uppercase tracking-wider px-8 py-4 text-sm

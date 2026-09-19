@@ -12,6 +12,7 @@ use App\Http\Controllers\LineupController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SponsorController;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\VendorController;
 use App\Http\Controllers\MediaPartnerController;
 use App\Http\Controllers\PerformerController;
 use App\Http\Controllers\SponsorApplicationController;

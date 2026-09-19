@@ -49,10 +49,58 @@
             </a>
 
             @auth
-            <a href="{{ url('/dashboard') }}"
-               class="font-bebas text-xs tracking-ultra uppercase text-elite-smoke hover:text-elite-gold transition-colors">
-                {{ Str::limit(auth()->user()->name, 12) }}
-            </a>
+            {{-- User dropdown --}}
+            <div class="relative group">
+                <button class="font-bebas text-xs tracking-ultra uppercase text-elite-smoke hover:text-elite-gold transition-colors flex items-center gap-1">
+                    {{ Str::limit(auth()->user()->name, 12) }}
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                    </svg>
+                </button>
+                
+                {{-- Dropdown menu --}}
+                <div class="absolute right-0 top-full mt-2 w-48 bg-elite-charcoal border border-elite-steel/50 shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                    <div class="p-2">
+                        <div class="px-3 py-2 text-xs text-elite-smoke border-b border-elite-steel/30 mb-1">
+                            {{ auth()->user()->email }}
+                        </div>
+                        
+                        <a href="{{ route('tickets.mine') }}" 
+                           class="block px-3 py-2 text-xs text-elite-bone hover:text-elite-gold hover:bg-elite-steel/20 transition-colors font-mono tracking-wide">
+                            🎫 My Tickets
+                        </a>
+                        
+                        @if(auth()->user()->isAdmin())
+                        <a href="{{ route('admin.dashboard') }}" 
+                           class="block px-3 py-2 text-xs text-elite-bone hover:text-elite-gold hover:bg-elite-steel/20 transition-colors font-mono tracking-wide">
+                            ⚡ Admin Panel
+                        </a>
+                        @endif
+                        
+                        @if(auth()->user()->isVendor())
+                        <a href="/vendor/dashboard" 
+                           class="block px-3 py-2 text-xs text-elite-bone hover:text-elite-gold hover:bg-elite-steel/20 transition-colors font-mono tracking-wide">
+                            🏪 Vendor Panel
+                        </a>
+                        @endif
+                        
+                        <a href="{{ route('profile.edit') }}" 
+                           class="block px-3 py-2 text-xs text-elite-bone hover:text-elite-gold hover:bg-elite-steel/20 transition-colors font-mono tracking-wide">
+                            ⚙️ Profile Settings
+                        </a>
+                        
+                        <div class="border-t border-elite-steel/30 mt-1 pt-1">
+                            <form action="{{ route('logout') }}" method="POST" class="inline w-full">
+                                @csrf
+                                <button type="submit" 
+                                        class="w-full text-left px-3 py-2 text-xs text-elite-crimson hover:bg-elite-crimson/10 transition-colors font-mono tracking-wide">
+                                    🚪 Logout
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
             @else
             <a href="{{ route('login') }}"
                class="font-bebas text-xs tracking-ultra uppercase text-elite-smoke hover:text-elite-gold transition-colors">
@@ -135,11 +183,26 @@
                 <a href="{{ route('tickets.index') }}" class="btn-gold w-full justify-center !py-5 text-base">
                     🎟️ BUY TICKETS NOW
                 </a>
-                @guest
+                @auth
+                <a href="{{ route('tickets.mine') }}" class="btn-outline-gold w-full justify-center !py-4">
+                    🎫 MY TICKETS
+                </a>
+                @if(auth()->user()->isAdmin())
+                <a href="{{ route('admin.dashboard') }}" class="btn-outline-gold w-full justify-center !py-4">
+                    ⚡ ADMIN PANEL
+                </a>
+                @endif
+                <form action="{{ route('logout') }}" method="POST" class="w-full">
+                    @csrf
+                    <button type="submit" class="btn-outline-crimson w-full justify-center !py-4">
+                        🚪 LOGOUT
+                    </button>
+                </form>
+                @else
                 <a href="{{ route('login') }}" class="btn-outline-gold w-full justify-center !py-4">
                     LOGIN / REGISTER
                 </a>
-                @endguest
+                @endauth
             </div>
 
             {{-- Quick stats --}}
