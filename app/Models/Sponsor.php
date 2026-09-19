@@ -18,6 +18,19 @@ class Sponsor extends Model
         'is_active' => 'boolean',
     ];
 
+    public function getLogoUrlAttribute(): ?string
+    {
+        if (! $this->logo) {
+            return null;
+        }
+
+        if (str_starts_with($this->logo, 'http://') || str_starts_with($this->logo, 'https://')) {
+            return $this->logo;
+        }
+
+        return asset('storage/'.$this->logo);
+    }
+
     public function scopeActive($query)
     {
         return $query->where('is_active', true);

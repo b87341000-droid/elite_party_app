@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\ArtistController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ScanLogsController;
 use App\Http\Controllers\Admin\ScannerController;
+use App\Http\Controllers\Admin\SponsorController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'admin'])
@@ -21,6 +22,9 @@ Route::middleware(['auth', 'admin'])
 
         // Artists
         Route::resource('artists', ArtistController::class)->except(['show']);
+
+        // Sponsors
+        Route::resource('sponsors', SponsorController::class)->except(['show']);
 
         // Scanner
         Route::get('/scanner', [ScannerController::class, 'index'])->name('scanner');

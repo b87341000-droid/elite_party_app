@@ -602,7 +602,7 @@
                     <p class="text-elite-smoke mb-8 leading-relaxed">
                         10,000+ paying guests. Premium audience. Curated experience. Stalls from ₦150,000. Food, fashion, lifestyle, auto accessories — we want the best.
                     </p>
-                    <a href="#" class="btn-gold">Apply as Vendor →</a>
+                    <a href="{{ route('vendor.apply') }}" class="btn-gold">Apply as Vendor →</a>
                 </div>
             </div>
 
@@ -620,7 +620,35 @@
                     <p class="text-elite-smoke mb-8 leading-relaxed">
                         Associate your brand with Lagos' most premium lifestyle event. Logo placement, branded zones, social media features, and live mentions.
                     </p>
-                    <a href="#" class="btn-crimson">Become a Sponsor →</a>
+                    <a href="{{ route('sponsor.apply') }}" class="btn-crimson">Become a Sponsor →</a>
+                </div>
+            </div>
+        </div>
+
+        {{-- Sponsors Marquee --}}
+        <div class="mt-16 pt-10 border-t border-elite-steel/40">
+            <div class="text-center mb-6">
+                <div class="font-mono text-[10px] tracking-ultra text-elite-gold uppercase">OUR PROUD PARTNERS & SPONSORS</div>
+            </div>
+            <div class="relative overflow-hidden py-3">
+                <div class="ticker-track flex items-center gap-10">
+                    @for ($repeat = 0; $repeat < 3; $repeat++)
+                        @forelse ($sponsors as $sponsor)
+                            <div class="inline-flex items-center gap-3 px-5 py-2.5 bg-elite-charcoal/80 border border-elite-steel/50 rounded flex-shrink-0 group hover:border-elite-gold transition-colors">
+                                @if ($sponsor->logo_url)
+                                    <img src="{{ $sponsor->logo_url }}" alt="{{ $sponsor->name }}" class="h-8 max-w-[120px] object-contain grayscale group-hover:grayscale-0 transition-all">
+                                @else
+                                    <span class="font-bebas text-lg text-elite-bone group-hover:text-elite-gold transition-colors">{{ $sponsor->name }}</span>
+                                @endif
+                                <span class="font-mono text-[9px] tracking-ultra text-elite-gold uppercase">[{{ $sponsor->tier }}]</span>
+                            </div>
+                        @empty
+                            <span class="font-bebas text-xl text-elite-smoke/50 px-6">SPONSOR 1</span>
+                            <span class="font-bebas text-xl text-elite-smoke/50 px-6">SPONSOR 2</span>
+                            <span class="font-bebas text-xl text-elite-smoke/50 px-6">SPONSOR 3</span>
+                            <span class="font-bebas text-xl text-elite-smoke/50 px-6">SPONSOR 4</span>
+                        @endforelse
+                    @endfor
                 </div>
             </div>
         </div>

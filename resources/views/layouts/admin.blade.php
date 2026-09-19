@@ -26,11 +26,12 @@
         <nav class="flex-1 p-4 space-y-1 overflow-y-auto">
             @php
                 $navItems = [
-                    ['admin.dashboard',         '📊', 'Dashboard'],
-                    ['admin.applications.index','📥', 'Applications'],
-                    ['admin.artists.index',     '🎤', 'Artists'],
-                    ['admin.scanner',           '📷', 'Scanner'],
-                    ['admin.scan-logs.index',   '📋', 'Scan Logs'],
+                    ['admin.dashboard',          '📊', 'Dashboard'],
+                    ['admin.applications.index', '📥', 'Applications'],
+                    ['admin.artists.index',      '🎤', 'Artists'],
+                    ['admin.sponsors.index',     '🤝', 'Sponsors'],
+                    ['admin.scanner',            '📷', 'Scanner'],
+                    ['admin.scan-logs.index',    '📋', 'Scan Logs'],
                 ];
             @endphp
 
@@ -45,7 +46,7 @@
 
             <div class="pt-4 mt-4 border-t border-elite-steel/30">
                 <div class="label-eyebrow px-4 mb-2 text-[9px]">Coming Soon</div>
-                @foreach (['Events','Ticket Types','Orders','Tickets','Sponsors','Vendors','Posts','Announcements','Subscribers'] as $label)
+                @foreach (['Events','Ticket Types','Orders','Tickets','Vendors','Posts','Announcements','Subscribers'] as $label)
                     <div class="flex items-center gap-3 px-4 py-2 font-bebas tracking-wider uppercase text-xs text-elite-smoke/40 cursor-not-allowed">
                         <span>·</span><span>{{ $label }}</span>
                     </div>

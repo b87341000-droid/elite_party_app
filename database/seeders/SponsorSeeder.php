@@ -9,67 +9,30 @@ class SponsorSeeder extends Seeder
 {
     public function run(): void
     {
-        Sponsor::truncate();
-
         $sponsors = [
-            [
-                'name' => 'Monster Energy',
-                'logo' => '/images/sponsors/monster.svg',
-                'website' => 'https://monsterenergy.com',
-                'tier' => 'platinum',
-                'description' => 'Official energy drink partner powering the midnight stage.',
-                'sort_order' => 1,
-                'is_active' => true,
-            ],
-            [
-                'name' => 'Pirelli Tires',
-                'logo' => '/images/sponsors/pirelli.svg',
-                'website' => 'https://pirelli.com',
-                'tier' => 'platinum',
-                'description' => 'Official motorsport tire and drift sponsor.',
-                'sort_order' => 2,
-                'is_active' => true,
-            ],
-            [
-                'name' => 'Hennessy',
-                'logo' => '/images/sponsors/hennessy.svg',
-                'website' => 'https://hennessy.com',
-                'tier' => 'gold',
-                'description' => 'Exclusive VIP lounge & bottle service sponsor.',
-                'sort_order' => 3,
-                'is_active' => true,
-            ],
-            [
-                'name' => 'Red Bull Racing',
-                'logo' => '/images/sponsors/redbull.svg',
-                'website' => 'https://redbull.com',
-                'tier' => 'gold',
-                'description' => 'High octane stunt exhibition and speed zone partner.',
-                'sort_order' => 4,
-                'is_active' => true,
-            ],
-            [
-                'name' => 'Brembo Brakes',
-                'logo' => '/images/sponsors/brembo.svg',
-                'website' => 'https://brembo.com',
-                'tier' => 'silver',
-                'description' => 'High performance braking systems display partner.',
-                'sort_order' => 5,
-                'is_active' => true,
-            ],
-            [
-                'name' => 'Soundcity TV',
-                'logo' => '/images/sponsors/soundcity.svg',
-                'website' => 'https://soundcity.tv',
-                'tier' => 'partner',
-                'description' => 'Official broadcast media partner.',
-                'sort_order' => 6,
-                'is_active' => true,
-            ],
+            ['Martell',          'platinum', 'https://martell.com'],
+            ['Guinness Nigeria', 'platinum', 'https://guinness.com'],
+            ['MTN Nigeria',      'gold',     'https://mtn.ng'],
+            ['Airtel',           'gold',     'https://airtel.ng'],
+            ['Red Bull',         'silver',   'https://redbull.com'],
+            ['Heineken',         'silver',   'https://heineken.com'],
+            ['Pulse NG',         'media',    'https://pulse.ng'],
+            ['Cool FM Lagos',    'media',    'https://coolfm.ng'],
         ];
 
-        foreach ($sponsors as $sponsor) {
-            Sponsor::create($sponsor);
+        // Remove any old/stale sample sponsors so counts match expected 8 sponsors
+        Sponsor::whereNotIn('name', array_column($sponsors, 0))->delete();
+
+        foreach ($sponsors as $i => [$name, $tier, $website]) {
+            Sponsor::updateOrCreate(
+                ['name' => $name],
+                [
+                    'tier' => $tier,
+                    'website' => $website,
+                    'sort_order' => $i + 1,
+                    'is_active' => true,
+                ]
+            );
         }
     }
 }
