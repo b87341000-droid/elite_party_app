@@ -24,9 +24,11 @@
                         Ticket drops, secret afterparty locations, artist reveals — straight to your inbox before anyone else.
                     </p>
                 </div>
-                <form class="space-y-3" onsubmit="event.preventDefault(); alert('Newsletter coming soon!');">
+                <form class="space-y-3" action="{{ route('newsletter.subscribe') }}" method="POST">
+                    @csrf
                     <div class="flex flex-col sm:flex-row gap-3">
                         <input type="email" required placeholder="your@email.com"
+                               name="email"
                                id="newsletter-email"
                                class="flex-1 bg-elite-black border border-elite-steel
                                       focus:border-elite-gold focus:ring-0

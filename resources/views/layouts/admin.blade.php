@@ -30,6 +30,9 @@
                     ['admin.applications.index', '📥', 'Applications'],
                     ['admin.artists.index',      '🎤', 'Artists'],
                     ['admin.sponsors.index',     '🤝', 'Sponsors'],
+                    ['admin.posts.index',        '📝', 'Blog Posts'],
+                    ['admin.announcements.index','📢', 'Announcements'],
+                    ['admin.subscribers.index',  '📧', 'Subscribers'],
                     ['admin.scanner',            '📷', 'Scanner'],
                     ['admin.scan-logs.index',    '📋', 'Scan Logs'],
                 ];
@@ -38,20 +41,11 @@
             @foreach ($navItems as $item)
                 <a href="{{ route($item[0]) }}"
                    class="flex items-center gap-3 px-4 py-3 font-bebas tracking-wider uppercase text-sm transition-colors
-                          {{ request()->routeIs($item[0]) ? 'bg-elite-gold/10 text-elite-gold border-l-2 border-elite-gold' : 'text-elite-smoke hover:text-elite-bone hover:bg-elite-charcoal' }}">
+                          {{ request()->routeIs($item[0].'*') ? 'bg-elite-gold/10 text-elite-gold border-l-2 border-elite-gold' : 'text-elite-smoke hover:text-elite-bone hover:bg-elite-charcoal' }}">
                     <span>{{ $item[1] }}</span>
                     <span>{{ $item[2] }}</span>
                 </a>
             @endforeach
-
-            <div class="pt-4 mt-4 border-t border-elite-steel/30">
-                <div class="label-eyebrow px-4 mb-2 text-[9px]">Coming Soon</div>
-                @foreach (['Events','Ticket Types','Orders','Tickets','Vendors','Posts','Announcements','Subscribers'] as $label)
-                    <div class="flex items-center gap-3 px-4 py-2 font-bebas tracking-wider uppercase text-xs text-elite-smoke/40 cursor-not-allowed">
-                        <span>·</span><span>{{ $label }}</span>
-                    </div>
-                @endforeach
-            </div>
         </nav>
 
         {{-- Bottom --}}

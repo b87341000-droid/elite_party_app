@@ -15,17 +15,17 @@
 {{-- Origin story --}}
 <section class="py-20 md:py-28">
     <div class="container-elite grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-        <div class="relative aspect-[4/5] bg-elite-charcoal border border-elite-steel overflow-hidden card-elite">
-            <div class="absolute inset-0 bg-gradient-to-br from-elite-gold/10 via-transparent to-elite-crimson/10"></div>
-            <div class="absolute inset-0 bg-carbon opacity-40"></div>
-            <div class="absolute inset-0 flex items-center justify-center">
-                <div class="text-center">
-                    <div class="heading-display text-[8rem] text-gold-gradient/30">E</div>
-                    <div class="font-mono text-xs tracking-ultra text-elite-gold/60">EST. 2018</div>
-                </div>
+        <div class="relative aspect-[4/5] bg-elite-charcoal border border-elite-steel overflow-hidden card-elite group">
+            <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800&h=1000&fit=crop"
+                 alt="Elite Block Party Festival Origins"
+                 class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+            <div class="absolute inset-0 bg-gradient-to-t from-elite-black via-elite-black/30 to-transparent"></div>
+            <div class="absolute bottom-6 left-6 right-6">
+                <div class="font-mono text-xs tracking-ultra text-elite-gold mb-1">EST. 2018 • LAGOS</div>
+                <div class="heading-display text-2xl text-elite-bone">WHERE IT ALL STARTED</div>
             </div>
-            <div class="absolute top-4 left-4 w-12 h-12 border-t-2 border-l-2 border-elite-gold"></div>
-            <div class="absolute bottom-4 right-4 w-12 h-12 border-b-2 border-r-2 border-elite-gold"></div>
+            <div class="absolute top-4 left-4 w-12 h-12 border-t-2 border-l-2 border-elite-gold pointer-events-none"></div>
+            <div class="absolute bottom-4 right-4 w-12 h-12 border-b-2 border-r-2 border-elite-gold pointer-events-none"></div>
         </div>
 
         <div>

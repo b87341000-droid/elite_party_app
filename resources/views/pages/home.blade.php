@@ -104,8 +104,10 @@
 <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden grain">
 
     {{-- ── Background layers ── --}}
-    <div class="absolute inset-0 bg-gradient-to-b from-elite-black via-elite-coal to-elite-black"></div>
-    <div class="absolute inset-0 bg-carbon opacity-50"></div>
+    <div class="absolute inset-0 bg-cover bg-center opacity-25 mix-blend-luminosity scale-105"
+         style="background-image: url('{{ $event?->hero_image_url ?? asset('images/hero-car.jpg') }}');"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-elite-black via-elite-coal/90 to-elite-black"></div>
+    <div class="absolute inset-0 bg-carbon opacity-40"></div>
 
     {{-- Ambient blobs --}}
     <div class="absolute top-1/3 -left-40 w-[700px] h-[700px] rounded-full"
@@ -468,50 +470,54 @@
             </p>
         </div>
 
-        {{-- Artist placeholder cards --}}
+        {{-- Real Artists / Line-up --}}
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-12">
+            @forelse($artists as $i => $artist)
+            <div class="relative group card-elite overflow-hidden aspect-[3/4] flex flex-col justify-end"
+                 data-reveal data-delay="{{ min($i * 80, 500) }}">
+
+                @if ($artist->photo_url)
+                    <img src="{{ $artist->photo_url }}"
+                         alt="{{ $artist->display_name }}"
+                         class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                @else
+                    <div class="absolute inset-0 bg-gradient-to-b from-elite-steel/50 to-elite-black/90"></div>
+                    <div class="absolute inset-0 bg-carbon opacity-50"></div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <span class="font-bebas text-[5rem] text-elite-steel/30">🎤</span>
+                    </div>
+                @endif
+
+                <div class="absolute inset-0 bg-gradient-to-t from-elite-black via-elite-black/40 to-transparent"></div>
+
+                @if ($artist->is_headliner)
+                    <div class="absolute top-3 left-3 px-2.5 py-1 bg-elite-gold text-elite-black font-mono text-[9px] tracking-ultra font-bold shadow-gold-glow">
+                        ★ HEADLINER
+                    </div>
+                @endif
+
+                <div class="relative p-5 z-10">
+                    <div class="font-mono text-[9px] tracking-ultra text-elite-gold uppercase mb-1">{{ strtoupper($artist->role) }}</div>
+                    <div class="font-bebas text-2xl text-elite-bone group-hover:text-elite-gold transition-colors">{{ $artist->display_name }}</div>
+                </div>
+            </div>
+            @empty
             @foreach([
                 ['slot' => '★ HEADLINER',    'teaser' => '???',  'tier' => 'Main Stage',    'time' => '11:00 PM', 'crimson' => true],
                 ['slot' => 'CO-HEADLINER',   'teaser' => '???',  'tier' => 'Main Stage',    'time' => '9:30 PM',  'crimson' => false],
                 ['slot' => 'SPECIAL GUEST',  'teaser' => '???',  'tier' => 'VIP Stage',     'time' => '8:00 PM',  'crimson' => false],
                 ['slot' => 'OPENING ACT',    'teaser' => '???',  'tier' => 'Main Stage',    'time' => '6:30 PM',  'crimson' => false],
-                ['slot' => 'DJ SET',         'teaser' => '???',  'tier' => 'After-Party',   'time' => '1:00 AM',  'crimson' => false],
-                ['slot' => 'LIVE BAND',      'teaser' => '???',  'tier' => 'VVIP Lounge',   'time' => '7:00 PM',  'crimson' => false],
-                ['slot' => 'AFRO BEATS',     'teaser' => '???',  'tier' => 'Pool Stage',    'time' => '5:00 PM',  'crimson' => false],
-                ['slot' => '+ MORE TBA',     'teaser' => '⚡',   'tier' => 'Coming Soon',   'time' => '???',      'crimson' => false],
             ] as $i => $artist)
-            <div class="relative group card-elite overflow-hidden aspect-[3/4] flex flex-col justify-end cursor-pointer"
-                 data-reveal data-delay="{{ min($i * 80, 500) }}">
-
-                {{-- Background with noise --}}
-                <div class="absolute inset-0 bg-gradient-to-b from-elite-steel/50 to-elite-black/90
-                            {{ $artist['crimson'] ? 'border-2 border-elite-crimson/60 shadow-crimson-glow' : '' }}">
-                </div>
+            <div class="relative group card-elite overflow-hidden aspect-[3/4] flex flex-col justify-end">
+                <div class="absolute inset-0 bg-gradient-to-b from-elite-steel/50 to-elite-black/90"></div>
                 <div class="absolute inset-0 bg-carbon opacity-50"></div>
-
-                {{-- "?" reveal --}}
-                <div class="absolute inset-0 flex items-center justify-center">
-                    <span class="font-bebas text-[6rem] text-elite-steel/30 group-hover:text-elite-gold/20 transition-colors duration-500">
-                        {{ $artist['teaser'] }}
-                    </span>
-                </div>
-
-                {{-- Shimmer on hover --}}
-                <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                     style="background: linear-gradient(135deg, transparent 40%, rgba(212,175,55,0.08) 100%);">
-                </div>
-
-                {{-- Content --}}
                 <div class="relative p-5 z-10">
                     <div class="font-mono text-[9px] tracking-ultra text-elite-gold uppercase mb-1">{{ $artist['slot'] }}</div>
                     <div class="font-bebas text-2xl text-elite-bone">ARTIST TBA</div>
-                    <div class="flex items-center justify-between mt-2">
-                        <span class="font-mono text-[9px] text-elite-smoke">{{ $artist['tier'] }}</span>
-                        <span class="font-mono text-[9px] text-elite-smoke">{{ $artist['time'] }}</span>
-                    </div>
                 </div>
             </div>
             @endforeach
+            @endforelse
         </div>
 
         {{-- Announcement CTA --}}
@@ -552,30 +558,42 @@
         </div>
 
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            @foreach([
-                ['🏎️', 'CAR SHOWCASE', "200+ of Lagos' most custom, exotic, and modified builds on full display. From Lambos to local builds — every machine is a statement."],
-                ['🎤', 'LIVE PERFORMANCES', 'Nigeria\'s top artists bring energy you can\'t stream. Multi-stage setup. Back-to-back sets. All night long.'],
-                ['👑', 'VVIP EXPERIENCE', 'Open bar, private table, dedicated waitstaff, and a ringside view of everything. The closest thing to a private event.'],
-                ['🍽️', 'CULINARY STREET', 'Gourmet street food from the best vendors in Lagos. From suya to sushi — properly premium.'],
-                ['📸', 'CONTENT ZONE', 'Professionally lit car showcase backdrop, branded photo booths, drone shots. Your feed will never be the same.'],
-                ['🌙', 'THE AFTER-PARTY', 'When the main event wraps, the real night begins. DJ sets, exclusive access, and Lagos nightlife at its peak.'],
-            ] as $i => [$icon, $title, $desc])
-            <div class="relative p-8 bg-elite-charcoal border border-elite-steel hover:border-elite-gold/40 transition-all duration-500 group cursor-default"
+            @forelse($experiences as $i => $exp)
+            <div class="relative bg-elite-charcoal border border-elite-steel hover:border-elite-gold/40 transition-all duration-500 group overflow-hidden card-elite"
                  data-reveal data-delay="{{ min($i * 100, 500) }}">
 
                 {{-- Left racing stripe --}}
-                <div class="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-elite-gold via-elite-crimson to-elite-gold opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div class="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-elite-gold via-elite-crimson to-elite-gold opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"></div>
 
-                {{-- HUD corner --}}
-                <div class="hud-corner hud-corner-tl opacity-0 group-hover:opacity-100 transition-opacity duration-300 !w-5 !h-5"></div>
+                @if ($exp->image)
+                    <div class="relative h-44 overflow-hidden">
+                        <img src="{{ $exp->image_url }}" alt="{{ $exp->title }}"
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-elite-charcoal via-transparent to-transparent"></div>
+                    </div>
+                @endif
 
-                <div class="text-4xl mb-4">{{ $icon }}</div>
-                <div class="font-display text-lg text-elite-bone mb-3 uppercase tracking-wider group-hover:text-elite-gold transition-colors duration-300">
-                    {{ $title }}
+                <div class="p-6">
+                    <div class="text-3xl mb-3">{{ $exp->icon ?? '🏎️' }}</div>
+                    <div class="font-display text-lg text-elite-bone mb-2 uppercase tracking-wider group-hover:text-elite-gold transition-colors duration-300">
+                        {{ $exp->title }}
+                    </div>
+                    <p class="text-sm text-elite-smoke leading-relaxed">{{ $exp->description }}</p>
                 </div>
+            </div>
+            @empty
+            @foreach([
+                ['🏎️', 'CAR SHOWCASE', "200+ of Lagos' most custom, exotic, and modified builds on full display."],
+                ['🎤', 'LIVE PERFORMANCES', 'Nigeria\'s top artists bring energy you can\'t stream.'],
+                ['👑', 'VVIP EXPERIENCE', 'Open bar, private table, dedicated waitstaff, and a ringside view of everything.'],
+            ] as $i => [$icon, $title, $desc])
+            <div class="relative p-8 bg-elite-charcoal border border-elite-steel hover:border-elite-gold/40 transition-all duration-500 group">
+                <div class="text-4xl mb-4">{{ $icon }}</div>
+                <div class="font-display text-lg text-elite-bone mb-3 uppercase tracking-wider">{{ $title }}</div>
                 <p class="text-sm text-elite-smoke leading-relaxed">{{ $desc }}</p>
             </div>
             @endforeach
+            @endforelse
         </div>
     </div>
 </section>
@@ -669,21 +687,80 @@
     </div>
 
     <div class="container-elite grid md:grid-cols-3 gap-6">
+        @forelse($reviews as $i => $review)
+        <div class="relative p-8 bg-elite-charcoal border border-elite-steel hover:border-elite-gold/30 transition-all duration-500 group flex flex-col justify-between"
+             data-reveal data-delay="{{ $i * 150 }}">
+            <div class="absolute top-0 left-0 w-full h-0.5 shimmer-border opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div>
+                <div class="font-mono text-xs text-elite-gold mb-4">
+                    {{ str_repeat('★', $review->rating ?? 5) }}
+                </div>
+                <p class="text-elite-bone leading-relaxed mb-6 font-light italic">"{{ $review->comment }}"</p>
+            </div>
+            <div class="flex items-center gap-3 pt-4 border-t border-elite-steel/30">
+                @if ($review->author_photo_url)
+                    <img src="{{ $review->author_photo_url }}" alt="{{ $review->author_name }}" class="w-10 h-10 rounded-full object-cover border border-elite-gold/40">
+                @else
+                    <div class="w-10 h-10 rounded-full bg-elite-black border border-elite-steel flex items-center justify-center font-display text-sm text-elite-gold">
+                        {{ strtoupper(substr($review->author_name, 0, 1)) }}
+                    </div>
+                @endif
+                <div>
+                    <div class="font-bebas text-elite-bone text-base leading-tight">{{ $review->author_name }}</div>
+                    <div class="font-mono text-[9px] tracking-ultra text-elite-gold">VERIFIED ATTENDEE</div>
+                </div>
+            </div>
+        </div>
+        @empty
         @foreach([
-            ['"Easily the best event I attended in Lagos in 2024. Cars were crazy, lineup was crazy, vibe was 100."', '@tobi_drives', '⭐⭐⭐⭐⭐'],
+            ['"Easily the best event I attended in Lagos. Cars were crazy, lineup was crazy, vibe was 100."', '@tobi_drives', '⭐⭐⭐⭐⭐'],
             ['"The VVIP experience was worth every kobo. Open bar, private table, meet & greet — I\'ve never felt more treated."', '@ada.lifestyle', '⭐⭐⭐⭐⭐'],
             ['"Bro my car got featured on 3 major pages from that show. The photography zone was elite."', '@lagos_gearhead', '⭐⭐⭐⭐⭐'],
         ] as $i => [$quote, $handle, $stars])
-        <div class="relative p-8 bg-elite-charcoal border border-elite-steel hover:border-elite-gold/30 transition-all duration-500 group"
-             data-reveal data-delay="{{ $i * 150 }}">
-            <div class="absolute top-0 left-0 w-full h-0.5 shimmer-border opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div class="relative p-8 bg-elite-charcoal border border-elite-steel hover:border-elite-gold/30 transition-all duration-500 group">
             <div class="font-mono text-xs text-elite-gold mb-4">{{ $stars }}</div>
             <p class="text-elite-bone leading-relaxed mb-6 font-light italic">{{ $quote }}</p>
             <div class="font-bebas tracking-ultra text-elite-smoke text-sm">{{ $handle }}</div>
         </div>
         @endforeach
+        @endforelse
     </div>
 </section>
+
+@if ($galleryItems->isNotEmpty())
+@include('components.paint-splash-divider', ['label' => '◆ ARCHIVE GALLERY ◆'])
+<section id="gallery" class="section-py relative overflow-hidden bg-elite-black">
+    <div class="container-elite">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+            <div>
+                <div class="label-eyebrow mb-2">Visual Vault</div>
+                <h2 class="heading-display text-5xl md:text-7xl text-elite-bone">
+                    THE <span class="text-gold-gradient">ARCHIVE</span>
+                </h2>
+            </div>
+            <a href="{{ route('gallery') }}" class="btn-outline-gold self-start md:self-auto">
+                VIEW FULL GALLERY →
+            </a>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[220px]">
+            @foreach ($galleryItems as $i => $item)
+                @if ($item->file_url)
+                <div class="group relative bg-elite-charcoal border border-elite-steel overflow-hidden card-elite {{ $i === 0 ? 'md:col-span-2 md:row-span-2' : '' }}">
+                    <img src="{{ $item->file_url }}" alt="{{ $item->title }}"
+                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-elite-black/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-4 transform translate-y-4 group-hover:translate-y-0 transition-transform">
+                        <div class="font-bebas text-lg text-elite-bone">{{ $item->title }}</div>
+                        <div class="font-mono text-[9px] tracking-ultra text-elite-gold uppercase">{{ $item->category }}</div>
+                    </div>
+                </div>
+                @endif
+            @endforeach
+        </div>
+    </div>
+</section>
+@endif
 
 @include('components.paint-splash-divider', ['label' => '◆ CONTACT ◆'])
 

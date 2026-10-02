@@ -38,8 +38,15 @@ class Artist extends Model
 
     public function getPhotoUrlAttribute(): ?string
     {
-        if (! $this->photo) return null;
-        return asset('storage/' . $this->photo);
+        if (! $this->photo) {
+            return null;
+        }
+
+        if (str_starts_with($this->photo, 'http://') || str_starts_with($this->photo, 'https://')) {
+            return $this->photo;
+        }
+
+        return asset('storage/'.$this->photo);
     }
 
     public function scopeOrdered($query)

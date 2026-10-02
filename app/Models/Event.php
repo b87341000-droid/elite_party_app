@@ -77,4 +77,43 @@ class Event extends Model
     {
         return trim("{$this->venue_name}, {$this->venue_address}, {$this->city}, {$this->state}, {$this->country}", ', ');
     }
+
+    public function getHeroImageUrlAttribute(): ?string
+    {
+        if (! $this->hero_image) {
+            return null;
+        }
+
+        if (str_starts_with($this->hero_image, 'http://') || str_starts_with($this->hero_image, 'https://')) {
+            return $this->hero_image;
+        }
+
+        return asset(ltrim($this->hero_image, '/'));
+    }
+
+    public function getFlyerImageUrlAttribute(): ?string
+    {
+        if (! $this->flyer_image) {
+            return null;
+        }
+
+        if (str_starts_with($this->flyer_image, 'http://') || str_starts_with($this->flyer_image, 'https://')) {
+            return $this->flyer_image;
+        }
+
+        return asset(ltrim($this->flyer_image, '/'));
+    }
+
+    public function getLogoImageUrlAttribute(): ?string
+    {
+        if (! $this->logo_image) {
+            return null;
+        }
+
+        if (str_starts_with($this->logo_image, 'http://') || str_starts_with($this->logo_image, 'https://')) {
+            return $this->logo_image;
+        }
+
+        return asset(ltrim($this->logo_image, '/'));
+    }
 }

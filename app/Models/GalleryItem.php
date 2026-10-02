@@ -37,4 +37,17 @@ class GalleryItem extends Model
     {
         return $query->where('category', $category);
     }
+
+    public function getFileUrlAttribute(): ?string
+    {
+        if (! $this->file_path) {
+            return null;
+        }
+
+        if (str_starts_with($this->file_path, 'http://') || str_starts_with($this->file_path, 'https://')) {
+            return $this->file_path;
+        }
+
+        return asset(ltrim($this->file_path, '/'));
+    }
 }

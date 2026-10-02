@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ContactController;
@@ -9,14 +11,16 @@ use App\Http\Controllers\ExperienceController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LineupController;
+use App\Http\Controllers\MediaPartnerController;
+use App\Http\Controllers\NewsletterController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\PerformerController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SponsorApplicationController;
 use App\Http\Controllers\SponsorController;
 use App\Http\Controllers\TicketController;
-use App\Http\Controllers\VendorController;
-use App\Http\Controllers\MediaPartnerController;
-use App\Http\Controllers\PerformerController;
-use App\Http\Controllers\SponsorApplicationController;
 use App\Http\Controllers\VendorApplicationController;
+use App\Http\Controllers\VendorController;
 use App\Http\Controllers\VolunteerController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,6 +35,13 @@ Route::get('/vendors', [VendorController::class, 'index'])->name('vendors');
 Route::get('/sponsors', [SponsorController::class, 'index'])->name('sponsors');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
+
+// Blog
+Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
+Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
+
+// Public Announcements
+Route::get('/announcements', [AnnouncementController::class, 'index'])->name('announcements.index');
 
 // Tickets
 Route::get('/tickets', [TicketController::class, 'index'])->name('tickets.index');
@@ -77,6 +88,10 @@ Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.s
 Route::get('/checkout/success/{reference}', [CheckoutController::class, 'success'])->name('checkout.success');
 Route::get('/checkout/failed', [CheckoutController::class, 'failed'])->name('checkout.failed');
 
+// Newsletter
+Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');
+Route::get('/newsletter/unsubscribe/{email}', [NewsletterController::class, 'unsubscribe'])->name('newsletter.unsubscribe');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -85,6 +100,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+// Notifications (auth)
+Route::middleware('auth')->group(function () {
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+    Route::get('/notifications/latest', [NotificationController::class, 'latest'])->name('notifications.latest');
+    Route::post('/notifications/{id}/read', [NotificationController::class, 'markRead'])->name('notifications.read');
+    Route::post('/notifications/read-all', [NotificationController::class, 'markAllRead'])->name('notifications.read-all');
+    Route::delete('/notifications/{id}', [NotificationController::class, 'destroy'])->name('notifications.destroy');
+    Route::delete('/notifications', [NotificationController::class, 'destroyAll'])->name('notifications.destroy-all');
 });
 
 require __DIR__.'/auth.php';
@@ -96,3 +121,4 @@ Route::get('/admin/test', function () {
 Route::get('/vendor/test', function () {
     return 'VENDOR AREA OK — welcome '.auth()->user()->name;
 })->middleware(['auth', 'vendor']);
+

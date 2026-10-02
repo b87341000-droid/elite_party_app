@@ -43,7 +43,7 @@
                         </div>
                         @if ($exp->image)
                             <div class="relative h-44 -mx-8 -mt-8 mb-6 overflow-hidden">
-                                <img src="{{ asset(ltrim($exp->image, '/')) }}" alt="{{ $exp->title }}"
+                                <img src="{{ $exp->image_url }}" alt="{{ $exp->title }}"
                                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                                 <div class="absolute inset-0 bg-gradient-to-t from-elite-charcoal via-transparent to-transparent"></div>
                             </div>

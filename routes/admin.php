@@ -1,11 +1,15 @@
 <?php
 
+use App\Http\Controllers\Admin\AnnouncementController;
 use App\Http\Controllers\Admin\ApplicationsController;
 use App\Http\Controllers\Admin\ArtistController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\PostCategoryController;
+use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\ScanLogsController;
 use App\Http\Controllers\Admin\ScannerController;
 use App\Http\Controllers\Admin\SponsorController;
+use App\Http\Controllers\Admin\SubscriberController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'admin'])
@@ -32,4 +36,20 @@ Route::middleware(['auth', 'admin'])
 
         // Scan logs
         Route::get('/scan-logs', [ScanLogsController::class, 'index'])->name('scan-logs.index');
+
+        // Blog Posts
+        Route::resource('posts', PostController::class)->except(['show']);
+
+        // Post Categories
+        Route::resource('post-categories', PostCategoryController::class)->except(['show', 'create', 'edit']);
+
+        // Announcements
+        Route::resource('announcements', AnnouncementController::class)->except(['show']);
+        Route::post('/announcements/{announcement}/send', [AnnouncementController::class, 'send'])->name('announcements.send');
+
+        // Subscribers
+        Route::get('/subscribers', [SubscriberController::class, 'index'])->name('subscribers.index');
+        Route::get('/subscribers/export', [SubscriberController::class, 'export'])->name('subscribers.export');
+        Route::delete('/subscribers/{subscriber}', [SubscriberController::class, 'destroy'])->name('subscribers.destroy');
     });
+

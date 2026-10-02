@@ -35,4 +35,17 @@ class Review extends Model
     {
         return $query->where('is_featured', true);
     }
+
+    public function getAuthorPhotoUrlAttribute(): ?string
+    {
+        if (! $this->author_photo) {
+            return null;
+        }
+
+        if (str_starts_with($this->author_photo, 'http://') || str_starts_with($this->author_photo, 'https://')) {
+            return $this->author_photo;
+        }
+
+        return asset('storage/'.$this->author_photo);
+    }
 }

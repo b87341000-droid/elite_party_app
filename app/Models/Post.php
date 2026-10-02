@@ -54,4 +54,17 @@ class Post extends Model
     {
         return $this->status === 'published' && $this->published_at && $this->published_at->isPast();
     }
+
+    public function getCoverImageUrlAttribute(): ?string
+    {
+        if (! $this->cover_image) {
+            return null;
+        }
+
+        if (str_starts_with($this->cover_image, 'http://') || str_starts_with($this->cover_image, 'https://')) {
+            return $this->cover_image;
+        }
+
+        return asset(ltrim($this->cover_image, '/'));
+    }
 }
