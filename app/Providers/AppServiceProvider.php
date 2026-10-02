@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Services\Payment\MockGateway;
 use App\Services\Payment\PaymentGatewayInterface;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         if (app()->environment('production') || str_contains(request()->url(), 'railway.app') || request()->header('x-forwarded-proto') === 'https') {
-            \Illuminate\Support\Facades\URL::forceScheme('https');
+            URL::forceScheme('https');
         }
     }
 }

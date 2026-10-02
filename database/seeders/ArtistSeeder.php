@@ -13,18 +13,18 @@ class ArtistSeeder extends Seeder
         $event = Event::first();
 
         $artists = [
-            ['Asake',         'Asake',         'performer', true,  'images/artists/asake.jpg'],
-            ['Burna Boy',     'Burna Boy',     'performer', true,  'images/artists/burna.jpg'],
-            ['Wizkid',        'Wizkid',        'performer', true,  'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=600&h=600&fit=crop&crop=face'],
-            ['Rema',          'Rema',          'performer', true,  'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=600&fit=crop&crop=face'],
-            ['Tems',          'Tems',          'performer', true,  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&h=600&fit=crop&crop=face'],
-            ['Ayra Starr',    'Ayra Starr',    'performer', false, 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&h=600&fit=crop&crop=face'],
-            ['DJ Spinall',    'DJ Spinall',    'dj',        false, 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&h=600&fit=crop&crop=face'],
-            ['DJ Cuppy',      'DJ Cuppy',      'dj',        false, 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&h=600&fit=crop&crop=face'],
-            ['Odumodublvck',  'Odumodublvck',  'performer', false, 'https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?w=600&h=600&fit=crop&crop=face'],
-            ['Tiwa Savage',   'Tiwa Savage',   'performer', false, 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&h=600&fit=crop&crop=face'],
-            ['Shallipopi',    'Shallipopi',    'performer', false, 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=600&h=600&fit=crop&crop=face'],
-            ['Olamide',       'Baddo',         'performer', false, 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=600&h=600&fit=crop&crop=face'],
+            ['Asake',         'Asake',         'performer', true,  'images/Asake.jpg'],
+            ['Burna Boy',     'Burna Boy',     'performer', true,  'images/BurnaBoy.jpg'],
+            ['Wizkid',        'Wizkid',        'performer', true,  'images/Wizkid.jpg'],
+            ['Rema',          'Rema',          'performer', true,  'images/Rema.jpg'],
+            ['Tems',          'Tems',          'performer', true,  'images/Tems.jpg'],
+            ['Ayra Starr',    'Ayra Starr',    'performer', false, 'images/AyraStarr.jpg'],
+            ['DJ Spinall',    'DJ Spinall',    'dj',        false, 'images/DJSpinall.jpg'],
+            ['DJ Cuppy',      'DJ Cuppy',      'dj',        false, 'images/DJCuppy.jpg'],
+            ['Odumodublvck',  'Odumodublvck',  'performer', false, 'images/Odumodublvck.jpg'],
+            ['Tiwa Savage',   'Tiwa Savage',   'performer', false, 'images/TiwaSavage.jpg'],
+            ['Shallipopi',    'Shallipopi',    'performer', false, 'images/Shallipopi.jpg'],
+            ['Olamide',       'Baddo',         'performer', false, 'images/Baddo.jpg'],
         ];
 
         // Clean existing artist records to avoid case-duplicates and populate fresh
@@ -32,15 +32,15 @@ class ArtistSeeder extends Seeder
 
         foreach ($artists as $i => [$name, $stage, $role, $headliner, $photo]) {
             Artist::create([
-                'event_id'     => $event?->id,
-                'name'         => $name,
-                'stage_name'   => $stage,
-                'role'         => $role,
+                'event_id' => $event?->id,
+                'name' => $name,
+                'stage_name' => $stage,
+                'role' => $role,
                 'is_headliner' => $headliner,
-                'sort_order'   => $i + 1,
-                'is_active'    => true,
-                'photo'        => $photo,
-                'bio'          => $this->getBio($name),
+                'sort_order' => $i + 1,
+                'is_active' => true,
+                'photo' => $photo,
+                'bio' => $this->getBio($name),
             ]);
         }
     }

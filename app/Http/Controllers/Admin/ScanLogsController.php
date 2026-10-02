@@ -19,10 +19,10 @@ class ScanLogsController extends Controller
         $logs = $query->paginate(50)->withQueryString();
 
         $counts = [
-            'all'       => ScanLog::count(),
-            'success'   => ScanLog::where('result', 'success')->count(),
+            'all' => ScanLog::count(),
+            'success' => ScanLog::where('result', 'success')->count(),
             'duplicate' => ScanLog::where('result', 'duplicate')->count(),
-            'invalid'   => ScanLog::where('result', 'invalid')->count(),
+            'invalid' => ScanLog::where('result', 'invalid')->count(),
         ];
 
         return view('admin.scan-logs.index', compact('logs', 'counts'));

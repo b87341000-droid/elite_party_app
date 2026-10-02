@@ -3,13 +3,13 @@
 namespace App\Services;
 
 use App\Mail\ApplicationApprovedMail;
-use App\Mail\ApplicationRejectedMail;
 use App\Mail\ApplicationReceivedMail;
+use App\Mail\ApplicationRejectedMail;
+use App\Mail\VendorCredentialsMail;
 use App\Models\User;
 use App\Models\VendorApplication;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ApplicationService
@@ -20,24 +20,24 @@ class ApplicationService
 
         if (! empty($data['documents'])) {
             foreach ($data['documents'] as $file) {
-                $path = $file->store('applications/' . date('Y/m'), 'local');
+                $path = $file->store('applications/'.date('Y/m'), 'local');
                 $documents[] = $path;
             }
         }
 
         $application = VendorApplication::create([
-            'user_id'       => $user?->id,
-            'type'          => $data['type'],
+            'user_id' => $user?->id,
+            'type' => $data['type'],
             'business_name' => $data['business_name'] ?? null,
-            'contact_name'  => $data['contact_name'],
-            'email'         => $data['email'],
-            'phone'         => $data['phone'],
-            'description'   => $data['description'],
-            'website'       => $data['website'] ?? null,
-            'instagram'     => $data['instagram'] ?? null,
-            'tiktok'        => $data['tiktok'] ?? null,
-            'documents'     => $documents,
-            'status'        => 'pending',
+            'contact_name' => $data['contact_name'],
+            'email' => $data['email'],
+            'phone' => $data['phone'],
+            'description' => $data['description'],
+            'website' => $data['website'] ?? null,
+            'instagram' => $data['instagram'] ?? null,
+            'tiktok' => $data['tiktok'] ?? null,
+            'documents' => $documents,
+            'status' => 'pending',
         ]);
 
         // Send confirmation email
@@ -54,7 +54,7 @@ class ApplicationService
     {
         DB::transaction(function () use ($application, $admin, $notes) {
             $application->update([
-                'status'      => 'approved',
+                'status' => 'approved',
                 'admin_notes' => $notes,
                 'reviewed_at' => now(),
                 'reviewed_by' => $admin?->id,
@@ -76,7 +76,7 @@ class ApplicationService
     public function reject(VendorApplication $application, ?User $admin = null, ?string $notes = null): void
     {
         $application->update([
-            'status'      => 'rejected',
+            'status' => 'rejected',
             'admin_notes' => $notes,
             'reviewed_at' => now(),
             'reviewed_by' => $admin?->id,
@@ -94,24 +94,25 @@ class ApplicationService
         $existing = User::where('email', $application->email)->first();
         if ($existing) {
             $application->update(['user_id' => $existing->id]);
+
             return;
         }
 
         $tempPassword = Str::random(12);
 
         $user = User::create([
-            'name'     => $application->business_name ?: $application->contact_name,
-            'email'    => $application->email,
+            'name' => $application->business_name ?: $application->contact_name,
+            'email' => $application->email,
             'password' => bcrypt($tempPassword),
-            'role'     => 'vendor',
-            'phone'    => $application->phone,
+            'role' => 'vendor',
+            'phone' => $application->phone,
         ]);
 
         $application->update(['user_id' => $user->id]);
 
         // Send the temp password to vendor
         try {
-            Mail::to($user->email)->send(new \App\Mail\VendorCredentialsMail($user, $tempPassword));
+            Mail::to($user->email)->send(new VendorCredentialsMail($user, $tempPassword));
         } catch (\Throwable $e) {
             \Log::error('Vendor credentials email failed', ['user_id' => $user->id]);
         }

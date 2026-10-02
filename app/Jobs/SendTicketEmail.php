@@ -24,7 +24,8 @@ class SendTicketEmail implements ShouldQueue
         $this->order->load(['tickets.ticketType', 'tickets.order']);
 
         if ($this->order->tickets->isEmpty()) {
-            \Log::warning('No tickets to email for order ' . $this->order->reference);
+            \Log::warning('No tickets to email for order '.$this->order->reference);
+
             return;
         }
 

@@ -27,8 +27,8 @@ class PostController extends Controller
 
         if ($request->filled('q')) {
             $query->where(function ($q) use ($request) {
-                $q->where('title', 'like', '%' . $request->q . '%')
-                    ->orWhere('excerpt', 'like', '%' . $request->q . '%');
+                $q->where('title', 'like', '%'.$request->q.'%')
+                    ->orWhere('excerpt', 'like', '%'.$request->q.'%');
             });
         }
 
@@ -62,7 +62,7 @@ class PostController extends Controller
         $data['user_id'] = auth()->id();
         $data['slug'] = $request->filled('slug')
             ? Str::slug($request->slug)
-            : Str::slug($data['title']) . '-' . Str::random(6);
+            : Str::slug($data['title']).'-'.Str::random(6);
 
         if ($data['status'] === 'published' && empty($data['published_at'])) {
             $data['published_at'] = now();
@@ -119,7 +119,7 @@ class PostController extends Controller
     {
         return $request->validate([
             'title' => 'required|string|max:200',
-            'slug' => 'nullable|string|max:200|unique:posts,slug,' . $id,
+            'slug' => 'nullable|string|max:200|unique:posts,slug,'.$id,
             'post_category_id' => 'nullable|exists:post_categories,id',
             'excerpt' => 'nullable|string|max:500',
             'body' => 'required|string',

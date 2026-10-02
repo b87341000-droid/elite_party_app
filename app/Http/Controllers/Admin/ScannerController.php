@@ -24,13 +24,13 @@ class ScannerController extends Controller
         $result = $this->scanner->scan($data['code'], $request->user());
 
         return response()->json([
-            'result'  => $result['result'],
+            'result' => $result['result'],
             'message' => $result['message'],
-            'ticket'  => $result['ticket'] ? [
-                'code'          => $result['ticket']->ticket_code,
-                'tier'          => $result['ticket']->ticketType->name ?? null,
+            'ticket' => $result['ticket'] ? [
+                'code' => $result['ticket']->ticket_code,
+                'tier' => $result['ticket']->ticketType->name ?? null,
                 'attendee_name' => $result['ticket']->attendee_name,
-                'scanned_at'    => optional($result['ticket']->scanned_at)->format('g:i A, M d'),
+                'scanned_at' => optional($result['ticket']->scanned_at)->format('g:i A, M d'),
             ] : null,
         ], $result['result'] === 'success' ? 200 : 422);
     }

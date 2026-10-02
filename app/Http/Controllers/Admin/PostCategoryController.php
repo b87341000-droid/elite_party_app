@@ -38,8 +38,8 @@ class PostCategoryController extends Controller
     public function update(Request $request, PostCategory $post_category): RedirectResponse
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:120|unique:post_categories,name,' . $post_category->id,
-            'slug' => 'nullable|string|max:120|unique:post_categories,slug,' . $post_category->id,
+            'name' => 'required|string|max:120|unique:post_categories,name,'.$post_category->id,
+            'slug' => 'nullable|string|max:120|unique:post_categories,slug,'.$post_category->id,
             'description' => 'nullable|string|max:255',
         ]);
 

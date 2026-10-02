@@ -2,6 +2,7 @@
 
 namespace App\Services\Payment;
 
+use App\Jobs\SendTicketEmail;
 use App\Models\Order;
 use App\Models\Payment;
 use App\Services\TicketService;
@@ -86,7 +87,7 @@ class PaymentService
         });
 
         // Queue email outside the transaction
-        \App\Jobs\SendTicketEmail::dispatch($order);
+        SendTicketEmail::dispatch($order);
     }
 
     private function gatewayName(): string

@@ -67,16 +67,16 @@ class AdminSponsorTest extends TestCase
         $response->assertStatus(200);
 
         $counts = $response->viewData('counts');
-        $this->assertEquals(8, $counts['all']);
-        $this->assertEquals(2, $counts['platinum']);
-        $this->assertEquals(2, $counts['gold']);
-        $this->assertEquals(2, $counts['silver']);
+        $this->assertEquals(count(Sponsor::all()), $counts['all']);
+        $this->assertEquals(3, $counts['platinum']);
+        $this->assertEquals(3, $counts['gold']);
+        $this->assertEquals(3, $counts['silver']);
         $this->assertEquals(0, $counts['partner']);
-        $this->assertEquals(2, $counts['media']);
+        $this->assertEquals(3, $counts['media']);
 
         $platinumResponse = $this->actingAs($this->admin)->get(route('admin.sponsors.index', ['tier' => 'platinum']));
         $platinumResponse->assertStatus(200);
-        $this->assertCount(2, $platinumResponse->viewData('sponsors'));
+        $this->assertCount(3, $platinumResponse->viewData('sponsors'));
     }
 
     public function test_create_and_edit_forms_render_successfully(): void

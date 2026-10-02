@@ -18,7 +18,7 @@ class AnnouncementMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: '📢 ELITE: ' . $this->announcement->title
+            subject: '📢 ELITE: '.$this->announcement->title
         );
     }
 

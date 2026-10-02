@@ -52,4 +52,3 @@ Route::middleware(['auth', 'admin'])
         Route::get('/subscribers/export', [SubscriberController::class, 'export'])->name('subscribers.export');
         Route::delete('/subscribers/{subscriber}', [SubscriberController::class, 'destroy'])->name('subscribers.destroy');
     });
-

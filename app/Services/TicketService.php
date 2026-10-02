@@ -26,14 +26,14 @@ class TicketService
         foreach ($order->items as $item) {
             for ($i = 0; $i < $item->quantity; $i++) {
                 $ticket = Ticket::create([
-                    'order_id'        => $order->id,
-                    'order_item_id'   => $item->id,
-                    'ticket_type_id'  => $item->ticket_type_id,
-                    'user_id'         => $order->user_id,
-                    'attendee_name'   => $order->customer_name,
-                    'attendee_email'  => $order->customer_email,
-                    'ticket_code'     => $this->generateCode(),
-                    'qr_hash'         => $this->generateQrHash(),
+                    'order_id' => $order->id,
+                    'order_item_id' => $item->id,
+                    'ticket_type_id' => $item->ticket_type_id,
+                    'user_id' => $order->user_id,
+                    'attendee_name' => $order->customer_name,
+                    'attendee_email' => $order->customer_email,
+                    'ticket_code' => $this->generateCode(),
+                    'qr_hash' => $this->generateQrHash(),
                 ]);
 
                 // Generate QR + PDF
@@ -44,7 +44,7 @@ class TicketService
                 } catch (\Throwable $e) {
                     \Log::error('Ticket QR/PDF generation failed', [
                         'ticket_id' => $ticket->id,
-                        'error'     => $e->getMessage(),
+                        'error' => $e->getMessage(),
                     ]);
                 }
 

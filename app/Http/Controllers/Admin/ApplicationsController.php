@@ -26,15 +26,15 @@ class ApplicationsController extends Controller
         $applications = $query->paginate(20)->withQueryString();
 
         $counts = [
-            'all'          => VendorApplication::count(),
-            'pending'      => VendorApplication::where('status', 'pending')->count(),
-            'approved'     => VendorApplication::where('status', 'approved')->count(),
-            'rejected'     => VendorApplication::where('status', 'rejected')->count(),
-            'vendors'      => VendorApplication::whereIn('type', ['food','fashion','merch','lifestyle'])->count(),
-            'sponsors'     => VendorApplication::where('type', 'sponsor')->count(),
-            'volunteers'   => VendorApplication::where('type', 'volunteer')->count(),
-            'performers'   => VendorApplication::where('type', 'performer')->count(),
-            'media'        => VendorApplication::where('type', 'media')->count(),
+            'all' => VendorApplication::count(),
+            'pending' => VendorApplication::where('status', 'pending')->count(),
+            'approved' => VendorApplication::where('status', 'approved')->count(),
+            'rejected' => VendorApplication::where('status', 'rejected')->count(),
+            'vendors' => VendorApplication::whereIn('type', ['food', 'fashion', 'merch', 'lifestyle'])->count(),
+            'sponsors' => VendorApplication::where('type', 'sponsor')->count(),
+            'volunteers' => VendorApplication::where('type', 'volunteer')->count(),
+            'performers' => VendorApplication::where('type', 'performer')->count(),
+            'media' => VendorApplication::where('type', 'media')->count(),
         ];
 
         return view('admin.applications.index', compact('applications', 'counts'));

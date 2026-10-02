@@ -121,4 +121,3 @@ Route::get('/admin/test', function () {
 Route::get('/vendor/test', function () {
     return 'VENDOR AREA OK — welcome '.auth()->user()->name;
 })->middleware(['auth', 'vendor']);
-

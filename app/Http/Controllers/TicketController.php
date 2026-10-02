@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\Ticket;
 use App\Models\TicketType;
 
 class TicketController extends Controller
@@ -22,7 +23,7 @@ class TicketController extends Controller
 
     public function myTickets()
     {
-        $tickets = \App\Models\Ticket::with(['ticketType.event', 'order'])
+        $tickets = Ticket::with(['ticketType.event', 'order'])
             ->where('user_id', auth()->id())
             ->orWhere('attendee_email', auth()->user()->email)
             ->latest()
@@ -33,7 +34,7 @@ class TicketController extends Controller
 
     public function downloadPdf(string $uuid)
     {
-        $ticket = \App\Models\Ticket::where('uuid', $uuid)->firstOrFail();
+        $ticket = Ticket::where('uuid', $uuid)->firstOrFail();
 
         // Only owner or admin can download
         $isOwner = auth()->check() && (
@@ -47,7 +48,7 @@ class TicketController extends Controller
         abort_unless($ticket->pdf_path && \Storage::disk('local')->exists($ticket->pdf_path), 404);
 
         return response()->download(
-            storage_path('app/' . $ticket->pdf_path),
+            storage_path('app/'.$ticket->pdf_path),
             "ELITE-Ticket-{$ticket->ticket_code}.pdf"
         );
     }

@@ -21,14 +21,14 @@ class TicketScanController extends Controller
         $ticket = $result['ticket'];
 
         return response()->json([
-            'result'  => $result['result'],
+            'result' => $result['result'],
             'message' => $result['message'],
-            'ticket'  => $ticket ? [
-                'code'          => $ticket->ticket_code,
-                'tier'          => $ticket->ticketType->name ?? null,
+            'ticket' => $ticket ? [
+                'code' => $ticket->ticket_code,
+                'tier' => $ticket->ticketType->name ?? null,
                 'attendee_name' => $ticket->attendee_name,
-                'is_scanned'    => $ticket->is_scanned,
-                'scanned_at'    => optional($ticket->scanned_at)->toIso8601String(),
+                'is_scanned' => $ticket->is_scanned,
+                'scanned_at' => optional($ticket->scanned_at)->toIso8601String(),
             ] : null,
         ], $result['result'] === 'success' ? 200 : 422);
     }

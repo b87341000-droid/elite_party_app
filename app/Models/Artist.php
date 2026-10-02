@@ -46,6 +46,10 @@ class Artist extends Model
             return $this->photo;
         }
 
+        if (str_starts_with($this->photo, 'images/') || str_starts_with($this->photo, '/images/')) {
+            return asset(ltrim($this->photo, '/'));
+        }
+
         return asset('storage/'.$this->photo);
     }
 

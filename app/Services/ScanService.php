@@ -26,38 +26,38 @@ class ScanService
         // ---- INVALID ----
         if (! $ticket) {
             ScanLog::create([
-                'ticket_id'    => null,
+                'ticket_id' => null,
                 'scanned_code' => $raw,
-                'result'       => 'invalid',
-                'scanned_by'   => $scannerId,
-                'ip_address'   => request()->ip(),
-                'user_agent'   => request()->userAgent(),
-                'notes'        => 'No matching ticket found.',
+                'result' => 'invalid',
+                'scanned_by' => $scannerId,
+                'ip_address' => request()->ip(),
+                'user_agent' => request()->userAgent(),
+                'notes' => 'No matching ticket found.',
             ]);
 
             return [
-                'result'  => 'invalid',
+                'result' => 'invalid',
                 'message' => 'Invalid ticket. Not found in system.',
-                'ticket'  => null,
+                'ticket' => null,
             ];
         }
 
         // ---- ALREADY SCANNED ----
         if ($ticket->is_scanned) {
             ScanLog::create([
-                'ticket_id'    => $ticket->id,
+                'ticket_id' => $ticket->id,
                 'scanned_code' => $ticket->ticket_code,
-                'result'       => 'duplicate',
-                'scanned_by'   => $scannerId,
-                'ip_address'   => request()->ip(),
-                'user_agent'   => request()->userAgent(),
-                'notes'        => 'Ticket was already scanned at ' . optional($ticket->scanned_at)->toDateTimeString(),
+                'result' => 'duplicate',
+                'scanned_by' => $scannerId,
+                'ip_address' => request()->ip(),
+                'user_agent' => request()->userAgent(),
+                'notes' => 'Ticket was already scanned at '.optional($ticket->scanned_at)->toDateTimeString(),
             ]);
 
             return [
-                'result'  => 'duplicate',
-                'message' => 'ALREADY USED at ' . optional($ticket->scanned_at)->format('g:i A, M d') . '.',
-                'ticket'  => $ticket,
+                'result' => 'duplicate',
+                'message' => 'ALREADY USED at '.optional($ticket->scanned_at)->format('g:i A, M d').'.',
+                'ticket' => $ticket,
             ];
         }
 
@@ -70,19 +70,19 @@ class ScanService
             ]);
 
             ScanLog::create([
-                'ticket_id'    => $ticket->id,
+                'ticket_id' => $ticket->id,
                 'scanned_code' => $ticket->ticket_code,
-                'result'       => 'success',
-                'scanned_by'   => $scannerId,
-                'ip_address'   => request()->ip(),
-                'user_agent'   => request()->userAgent(),
+                'result' => 'success',
+                'scanned_by' => $scannerId,
+                'ip_address' => request()->ip(),
+                'user_agent' => request()->userAgent(),
             ]);
         });
 
         return [
-            'result'  => 'success',
-            'message' => 'Welcome! ' . strtoupper($ticket->ticketType->name ?? 'TICKET') . ' — valid entry.',
-            'ticket'  => $ticket,
+            'result' => 'success',
+            'message' => 'Welcome! '.strtoupper($ticket->ticketType->name ?? 'TICKET').' — valid entry.',
+            'ticket' => $ticket,
         ];
     }
 
@@ -102,21 +102,29 @@ class ScanService
         if (is_array($decoded)) {
             if (! empty($decoded['h'])) {
                 $ticket = Ticket::where('qr_hash', $decoded['h'])->first();
-                if ($ticket) return $ticket;
+                if ($ticket) {
+                    return $ticket;
+                }
             }
             if (! empty($decoded['u'])) {
                 $ticket = Ticket::where('uuid', $decoded['u'])->first();
-                if ($ticket) return $ticket;
+                if ($ticket) {
+                    return $ticket;
+                }
             }
             if (! empty($decoded['c'])) {
                 $ticket = Ticket::where('ticket_code', $decoded['c'])->first();
-                if ($ticket) return $ticket;
+                if ($ticket) {
+                    return $ticket;
+                }
             }
         }
 
         // 2. Try ticket code
         $ticket = Ticket::where('ticket_code', strtoupper($raw))->first();
-        if ($ticket) return $ticket;
+        if ($ticket) {
+            return $ticket;
+        }
 
         // 3. Try QR hash
         return Ticket::where('qr_hash', $raw)->first();

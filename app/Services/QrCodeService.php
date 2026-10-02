@@ -3,8 +3,8 @@
 namespace App\Services;
 
 use App\Models\Ticket;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Facades\Storage;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class QrCodeService
 {
@@ -18,9 +18,9 @@ class QrCodeService
 
         // Full payload the scanner will read
         $payload = json_encode([
-            'h'  => $ticket->qr_hash,
-            'c'  => $ticket->ticket_code,
-            'u'  => $ticket->uuid,
+            'h' => $ticket->qr_hash,
+            'c' => $ticket->ticket_code,
+            'u' => $ticket->uuid,
         ]);
 
         $png = QrCode::format('png')
@@ -39,7 +39,7 @@ class QrCodeService
      */
     public function absolutePath(string $relativePath): string
     {
-        return storage_path('app/' . $relativePath);
+        return storage_path('app/'.$relativePath);
     }
 
     /**
@@ -59,6 +59,6 @@ class QrCodeService
             ->errorCorrection('H')
             ->generate($payload);
 
-        return 'data:image/png;base64,' . base64_encode($png);
+        return 'data:image/png;base64,'.base64_encode($png);
     }
 }

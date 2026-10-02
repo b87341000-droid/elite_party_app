@@ -21,7 +21,7 @@ class TicketPdfService
         $qrDataUri = $this->qr->dataUriForTicket($ticket);
 
         $pdf = Pdf::loadView('pdf.ticket', [
-            'ticket'    => $ticket,
+            'ticket' => $ticket,
             'qrDataUri' => $qrDataUri,
         ])->setPaper([0, 0, 595, 300], 'landscape'); // 595x300 ≈ ticket-sized
 

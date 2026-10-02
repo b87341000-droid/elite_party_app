@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreVendorApplicationRequest;
 use App\Services\ApplicationService;
-use Illuminate\Http\Request;
 
 class VendorApplicationController extends Controller
 {

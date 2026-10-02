@@ -53,7 +53,7 @@ class AnnouncementController extends Controller
         }
 
         return redirect()->route('admin.announcements.index')
-            ->with('success', 'Announcement created' . ($data['send_email'] ? ' and email dispatch queued.' : '.'));
+            ->with('success', 'Announcement created'.($data['send_email'] ? ' and email dispatch queued.' : '.'));
     }
 
     public function edit(Announcement $announcement): View

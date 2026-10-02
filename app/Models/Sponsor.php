@@ -28,6 +28,10 @@ class Sponsor extends Model
             return $this->logo;
         }
 
+        if (str_starts_with($this->logo, 'images/') || str_starts_with($this->logo, '/images/')) {
+            return asset(ltrim($this->logo, '/'));
+        }
+
         return asset('storage/'.$this->logo);
     }
 
